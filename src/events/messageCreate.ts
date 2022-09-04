@@ -9,7 +9,8 @@ export default new Event("messageCreate", async (message) => {
   
   const msgContent = message.content!.toLowerCase(),
     msgChannel = (message.channel!) as GuildTextBasedChannel,
-    msgMember = message.member!;
+    msgMember = message.member!,
+    msgGuild = message.guild!;
   
   // Prefix command handler
   let prefix: typings.BotPrefix = constants.Prefixes[0];
@@ -32,5 +33,22 @@ export default new Event("messageCreate", async (message) => {
       );
 
     command.run(client, message, args);
+  }
+  
+  // Member verification
+  if (msgChannel.name.includes("gatehouse")) {
+    message.delete();
+  
+    const aceKingdomId: string = JSON.parse((process.env.guildIds) as string)[1];
+  
+    if (
+      message.guildId !== aceKingdomId ||
+      msgContent !== "!ace"
+    ) return;
+  
+    msgMember.roles.add("891974559610318878", "Autorole");
+    msgMember.roles.add("902166509701443604", "Autorole");
+  
+    msgMember.send(`Welcome to ${msgGuild.name} <@${msgMember.id}> ${constants.Emojis.ELAINA}`);
   }
 });

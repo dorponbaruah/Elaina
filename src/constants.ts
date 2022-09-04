@@ -1,3 +1,5 @@
+import { PresenceData } from "discord.js";
+
 export const Prefixes = [
   "e",
   "e!",
@@ -12,7 +14,12 @@ export const Emojis = {
   ELAINA: "<a:a_elaina:1015651652109344878>"
 } as const;
 
-export const Activity = {
-  TYPE: "PLAYING",
-  NAME: "You know? Magic will deeply connect us all."
-} as const;
+export const ElainaPresenceData = {
+  status: "online",
+  activities: [
+    {
+      name: "You know? Magic will deeply connect us all.",
+      type: "PLAYING"
+    }
+  ]
+} as PresenceData;
