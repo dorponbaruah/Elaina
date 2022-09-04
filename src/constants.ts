@@ -11,3 +11,8 @@ export const Emojis = {
   INFO: "<:Info:913023268162789386>",
   ELAINA: "<a:a_elaina:1015651652109344878>"
 } as const;
+
+export const Activity = {
+  TYPE: "PLAYING",
+  NAME: "You know? Magic will deeply connect us all."
+} as const;
