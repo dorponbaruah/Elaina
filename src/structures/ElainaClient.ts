@@ -3,28 +3,15 @@ import { Client, Collection, Intents, ApplicationCommandDataResolvable, ClientEv
 import { promisify } from "util";
 import glob from "glob";
 
-/**
- * The main starting point of Elaina#0102.
- * 
- * @extends {Client}
- */
 export class ElainaClient extends Client<true> {
   public prefixCommands: Collection<string, typings.ElainaPrefixCommand> = new Collection();
   public slashCommands: Collection<string, typings.ElainaSlashCommand> = new Collection();
   
-  /**
-   * Elaina#0102 logs in and registers all the modules.
-   */
   public start() {
     this.login(process.env.botToken);
     this.registerModules();
   }
-  
-  /**
-   * Registers all the modules.
-   * 
-   * @returns {ElainaClient}
-   */
+
   public async registerModules() {
     const globPromise = promisify(glob);
     
@@ -84,7 +71,5 @@ export class ElainaClient extends Client<true> {
       
       this.on(event.event, event.run);
     });
-    
-    return this;
   }
 }
