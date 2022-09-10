@@ -1,6 +1,16 @@
 import { constants } from "./index";
 import { ElainaClient } from "./structures/ElainaClient";
-import { Message, CommandInteraction, GuildMember, ApplicationCommandDataResolvable, ClientEvents } from "discord.js";
+import { 
+  Message,
+  CommandInteraction,
+  GuildMember,
+  ApplicationCommandDataResolvable,
+  ClientEvents,
+  WebhookClientDataURL,
+  WebhookClientDataIdWithToken,
+  WebhookMessageOptions,
+  Snowflake
+} from "discord.js";
 
 interface Init<Key extends keyof ClientEvents> {
   event: Key;
@@ -19,7 +29,7 @@ export type ElainaPrefixCommand = {
   run: (
     client: ElainaClient,
     message: Message,
-    args: {[index: number]: string}
+    args: string[]
   ) => any;
 } & Commons;
 
@@ -35,3 +45,16 @@ export type ElainaSlashCommand = {
 } & Commons & ApplicationCommandDataResolvable;
 
 export type BotPrefix = typeof constants.Prefixes[number];
+
+export interface IElainaErrorMessageOptions {
+  ephemeral?: boolean;
+  mention?: boolean;
+}
+
+export type ElainaWebhookData = {
+  url?: string;
+  token?: string;
+  id?: Snowflake;
+  channelId?: Snowflake;
+  
+}

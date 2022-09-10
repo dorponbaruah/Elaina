@@ -1,6 +1,6 @@
-import { SlashCommand } from "../index";
+import { ElainaSlashCommand } from "../index";
 
-export default new SlashCommand({
+export default new ElainaSlashCommand({
   name: "ping",
   description: "Shows bot's latency to discord.",
   options: [

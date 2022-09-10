@@ -1,4 +1,4 @@
-import client, { Event, typings, constants } from "../index";
+import client, { Event, ElainaErrorMessage, typings, constants } from "../index";
 import { GuildTextBasedChannel } from "discord.js";
 
 export default new Event("messageCreate", async (message) => {
@@ -27,9 +27,9 @@ export default new Event("messageCreate", async (message) => {
     const command = client.prefixCommands.get(cmd.toLowerCase()) || client.prefixCommands.find(c => (c.aliases!.includes(cmd.toLowerCase())) as boolean);
     if (!command) return;
 
-    if (command.category === "Developer" && msgMember.id !== process.env.developerId)
+    if (command.category.toLowerCase() === "developer" && msgMember.id !== process.env.developerId)
       return message.reply(
-        `${constants.Emojis.ERROR} This command can only be used by the bot owner.`
+        new ElainaErrorMessage("This command can only be used by the bot owner.")
       );
 
     command.run(client, message, args);
@@ -45,9 +45,11 @@ export default new Event("messageCreate", async (message) => {
       message.guildId !== aceKingdomId ||
       msgContent !== "!ace"
     ) return;
-  
-    msgMember.roles.add("891974559610318878", "Autorole");
-    msgMember.roles.add("902166509701443604", "Autorole");
+
+    ["891974559610318878", "902166509701443604"]
+      .forEach(role => {
+        msgMember.roles.add(role, "Autorole")
+      });
   
     msgMember.send(`Welcome to ${msgGuild.name} <@${msgMember.id}> ${constants.Emojis.ELAINA}`);
   }

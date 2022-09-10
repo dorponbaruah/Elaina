@@ -19,6 +19,8 @@ export default client;
 export * as constants from "./constants";
 export * as typings from "./typings";
 export { Event } from "./structures/Event";
-export { PrefixCommand, SlashCommand } from "./structures/Commands";
+export { ElainaPrefixCommand, ElainaSlashCommand } from "./structures/ElainaCommands";
+export { ElainaErrorMessage } from "./structures/ElainaErrorMessage";
+export { ElainaWebhook } from "./structures/ElainaWebhook";
 
 client.start();

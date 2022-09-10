@@ -1,5 +1,5 @@
 import { typings, constants, Event } from "../index";
-import { Client, Collection, Intents, ApplicationCommandDataResolvable, ClientEvents } from "discord.js";
+import { Client, Collection, Intents, ApplicationCommandDataResolvable, ClientEvents, Snowflake } from "discord.js";
 import { promisify } from "util";
 import glob from "glob";
 
@@ -52,7 +52,7 @@ export class ElainaClient extends Client<true> {
       arrayOfSlashCommands.push(command);
     });
     
-    const guildIds: string[] = JSON.parse((process.env.guildIds) as string);
+    const guildIds: Snowflake[] = JSON.parse((process.env.guildIds) as string);
     
     this.on("ready", () => {
       guildIds.forEach( async (guildId) => {

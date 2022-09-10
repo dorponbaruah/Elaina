@@ -1,6 +1,6 @@
-import { PrefixCommand } from "../index";
+import { ElainaPrefixCommand } from "../index";
 
-export default new PrefixCommand({
+export default new ElainaPrefixCommand({
   name: "ping",
   description: "Shows bot's latency to discord.",
   aliases: ["latency"],

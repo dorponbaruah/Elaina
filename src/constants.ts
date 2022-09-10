@@ -8,7 +8,7 @@ export const Prefixes = [
 ] as const;
 
 export const Emojis = {
-  ERROR: "<:Error:1013467479244283974>",
+  ERROR: "<a:Error:1017806230451925002>",
   SUCCESS: "<a:Success:1012844463019802704>",
   INFO: "<:Info:913023268162789386>",
   ELAINA: "<a:a_elaina:1015651652109344878>"
