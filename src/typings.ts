@@ -52,7 +52,7 @@ export interface IElainaErrorMessageOptions {
   mention?: boolean;
 }
 
-export type ElainaWebhookData = {
+export interface IElainaWebhookData {
   url?: string;
   token?: string;
   id?: Snowflake;

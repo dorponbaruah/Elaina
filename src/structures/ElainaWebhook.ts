@@ -2,11 +2,11 @@ import client, { typings } from "../index";
 import { WebhookMessageOptions, WebhookClient, WebhookClientDataURL, WebhookClientDataIdWithToken, GuildTextBasedChannel, ThreadChannel, Snowflake } from "discord.js";
 
 export class ElainaWebhook {
-  private _data: typings.ElainaWebhookData;
+  private _data: typings.IElainaWebhookData;
   private _send: WebhookMessageOptions;
   private _createdWebhook: string;
 
-  constructor(data: typings.ElainaWebhookData, sendOptions: WebhookMessageOptions) {
+  constructor(data: typings.IElainaWebhookData, sendOptions: WebhookMessageOptions) {
     this._data = data;
     this._send = sendOptions;
   }
@@ -16,7 +16,7 @@ export class ElainaWebhook {
   
     const channel = client.channels.cache.get(channelId) as GuildTextBasedChannel;
   
-    if (!channel || channel instanceof ThreadChannel) return false;
+    if (!channel || channel instanceof ThreadChannel) return;
   
     const myWebhooks = (await channel.fetchWebhooks()).filter(
       webhook => webhook.owner.id === client.user!.id
