@@ -1,5 +1,6 @@
 import { constants } from "./index";
 import { ElainaClient } from "./structures/ElainaClient";
+
 import { 
   Message,
   CommandInteraction,
@@ -56,5 +57,41 @@ export type ElainaWebhookData = {
   token?: string;
   id?: Snowflake;
   channelId?: Snowflake;
-  
+}
+
+export interface IRedditPostData {
+  title: string;
+  post_url: string;
+}
+
+export interface ISubredditData {
+  name: string;
+  icon_url: string;
+}
+
+interface IThread {
+  kind: "t3";
+  data: {
+    title: string;
+    over_18: boolean;
+    url: string;
+    post_hint: string;
+    is_video: boolean;
+    is_gallery: boolean;
+  }
+}
+
+export interface IRedditListing {
+  kind: "Listing";
+  data: {
+    children: IThread[]
+  }
+}
+
+export interface ISubredditAbout {
+  kind: "t5",
+  data: {
+    display_name_prefixed: string;
+    community_icon: string;
+  }
 }
