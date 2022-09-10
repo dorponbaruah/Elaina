@@ -59,7 +59,7 @@ export class ElainaWebhook {
         webhookClientData = null;
     }
   
-    if (webhookClientData === null) throw new Error("No webhook or channel specified.");
+    if (webhookClientData === null) throw new Error("No valid webhook or channel specified.");
   
     const webhookClient = new WebhookClient(webhookClientData!)
   
