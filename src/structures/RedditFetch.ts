@@ -7,8 +7,12 @@ export class RedditFetch {
   private _postData: typings.IRedditPostData;
   private _subredditData: typings.ISubredditData;
   
-  constructor(subreddits: string[], over_18?: boolean) {
-    this._subreddit = subreddits[Math.floor(Math.random() * subreddits.length)];
+  constructor(subreddits: string | string[], over_18?: boolean) {
+    this._subreddit = (
+      typeof subreddits === "string" ?
+      subreddits : 
+      subreddits[Math.floor(Math.random() * subreddits.length)]
+    );
     this._over_18 = over_18 ?? false;
   }
   
@@ -60,7 +64,7 @@ export class RedditFetch {
   }
   
   public get getPostTitle(): string {
-    return this._postData.title;
+    return (typeof this._postData.title === "string" ? this._postData.title : "");
   }
   
   public get getPostImage(): string {
