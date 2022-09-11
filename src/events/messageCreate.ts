@@ -1,5 +1,5 @@
 import client, { Event, ElainaErrorMessage, typings, constants } from "../index";
-import { GuildTextBasedChannel } from "discord.js";
+import { GuildTextBasedChannel, Snowflake } from "discord.js";
 
 export default new Event("messageCreate", async (message) => {
   if (
@@ -26,12 +26,33 @@ export default new Event("messageCreate", async (message) => {
 
     const command = client.prefixCommands.get(cmd.toLowerCase()) || client.prefixCommands.find(c => (c.aliases!.includes(cmd.toLowerCase())) as boolean);
     if (!command) return;
-
+    
+    if (command.onlyChannels) {
+      if (
+        !command.onlyChannels.includes(msgChannel.name) &&
+        msgChannel.name !== "chaos"
+      ) {
+        const channels: Snowflake[] = [];
+        
+        for await (const channelName of command.onlyChannels) {
+          const channel = client.guilds.cache
+            .get(JSON.parse((process.env.guildIds) as string)[1])!
+            .channels.cache.find(c => c.name === channelName);
+        
+          if (channel) channels.push(channel.id);
+        }
+        
+        return message.reply(
+          new ElainaErrorMessage(`Use this command in this/these channel(s)\n\n> <#${channels.join(">, <#")}>`)
+        );
+      }
+    }
+    
     if (command.category.toLowerCase() === "developer" && msgMember.id !== process.env.developerId)
       return message.reply(
         new ElainaErrorMessage("This command can only be used by the bot owner.")
       );
-
+    
     command.run(client, message, args);
   }
   

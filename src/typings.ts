@@ -20,6 +20,7 @@ interface IEventListener<Key extends keyof ClientEvents> {
 
 type Commons = {
   category: string;
+  onlyChannels?: string[];
   eventListener?: IEventListener<keyof ClientEvents>;
 }
 

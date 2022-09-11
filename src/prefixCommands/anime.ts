@@ -6,6 +6,7 @@ export default new ElainaPrefixCommand({
   description: "Are you a weeb or otaku?",
   aliases: ["a"],
   category: "Forest of witches",
+  onlyChannels: ["anime-region"],
   run: async (client, message, args) => {
     if (!args[0])
       return message.reply(
