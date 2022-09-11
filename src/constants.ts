@@ -23,3 +23,7 @@ export const ElainaPresenceData = {
     }
   ]
 } as PresenceData;
+
+export const Colors = {
+  MAIN_EMBED_COLOR: "#ffffff"
+} as const;
