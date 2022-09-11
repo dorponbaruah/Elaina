@@ -1,2 +1,5 @@
 * @Destiny-746
 *.ts @Destiny-746
+src/**/ElainaClient.ts @reconlx @Destiny-746
+src/**/Event.ts @reconlx
+src/**/ElainaCommands.ts @reconlx @Destiny-746
