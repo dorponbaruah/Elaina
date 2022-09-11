@@ -27,8 +27,8 @@ export class ElainaClient extends Client<true> {
     prefixCommandFiles.forEach( async (filepath) => {
       const command: typings.ElainaPrefixCommand = await importFile(filepath);
       if (!command.name) return;
-      if (command.init) {
-        this.on(command.init.event, command.init.run);
+      if (command.eventListener) {
+        this.on(command.eventListener.event, command.eventListener.run);
       }
       
       this.prefixCommands.set(command.name, command);
@@ -44,8 +44,8 @@ export class ElainaClient extends Client<true> {
     slashCommandFiles.forEach( async (filepath) => {
       const command: typings.ElainaSlashCommand = await importFile(filepath);
       if (!command.name) return;
-      if (command.init) {
-        this.on(command.init.event, command.init.run);
+      if (command.eventListener) {
+        this.on(command.eventListener.event, command.eventListener.run);
       }
       
       this.slashCommands.set(command.name, command);

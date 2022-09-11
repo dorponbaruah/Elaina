@@ -13,14 +13,14 @@ import {
   Snowflake
 } from "discord.js";
 
-interface Init<Key extends keyof ClientEvents> {
+interface IEventListener<Key extends keyof ClientEvents> {
   event: Key;
   run: (...args: ClientEvents[Key]) => any;
 }
 
 type Commons = {
   category: string;
-  init?: Init<keyof ClientEvents>;
+  eventListener?: IEventListener<keyof ClientEvents>;
 }
 
 export type ElainaPrefixCommand = {
