@@ -110,7 +110,7 @@ export default new ElainaPrefixCommand({
     
     await post.makeRequest();
     
-    const webhook = new ElainaWebhook({ channelId: message.channel.id }, {
+    new ElainaWebhook({ channelId: message.channel.id }, {
       username: post.getSubredditName,
       avatarURL: post.getSubredditIcon,
       embeds: [

@@ -6,8 +6,8 @@ export default new ElainaPrefixCommand({
   description: "Lewd anime/manga images UwU.",
   aliases: ["h"],
   category: "Forest of witches",
-  onlyChannels: "hentai-region",
-  run: (client, message, args) => {
+  onlyChannels: ["hentai-region"],
+  run: async (client, message, args) => {
     const subreddits = [
         "hentai",
         "dekaihentai",
@@ -23,7 +23,7 @@ export default new ElainaPrefixCommand({
         "thick_hentai"
     ];
     
-    const post = new RedditFetch(subreddits);
+    const post = new RedditFetch(subreddits, true);
     
     await post.makeRequest();
     
@@ -37,6 +37,6 @@ export default new ElainaPrefixCommand({
           .setColor(constants.Colors.MAIN_EMBED_COLOR)
           .setFooter({ text: `Sent by ${client.user?.tag}`, iconURL: client.user?.displayAvatarURL() })
       ]
-    });
+    }).send();
   }
 });
