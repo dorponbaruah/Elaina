@@ -1,5 +1,6 @@
 import { constants } from "./index";
 import { ElainaClient } from "./structures/ElainaClient";
+import { APIMessage } from "discord-api-types/v9";
 
 import { 
   Message,
@@ -58,6 +59,8 @@ export interface IElainaWebhookData {
   token?: string;
   id?: Snowflake;
   channelId?: Snowflake;
+  messageId?: Snowflake;
+  messageUrl?: string;
 }
 
 export interface IRedditPostData {

@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Destiny-746/Elaina#readme",
   "dependencies": {
+    "discord-api-types": "^0.37.9",
     "discord.js": "^13.9.2",
     "dotenv": "^16.0.2",
     "glob": "^8.0.3",
