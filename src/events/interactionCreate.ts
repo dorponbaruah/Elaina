@@ -34,7 +34,7 @@ export default new Event("interactionCreate", async (interaction) => {
         }
     
         return interaction.reply(
-          new ElainaErrorMessage(`Use this command in this/these channel(s)\n\n> <#${channels.join(">, <#")}>`, {
+          new ElainaErrorMessage(`Use this command in this/these channel(s)\n> <#${channels.join(">, <#")}>`, {
             ephemeral: true
           })
         );
