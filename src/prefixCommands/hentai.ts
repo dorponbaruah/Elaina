@@ -8,6 +8,8 @@ export default new ElainaPrefixCommand({
   category: "Forest of witches",
   onlyChannels: ["hentai-region"],
   run: async (client, message, args) => {
+    const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
+    
     const subreddits = [
         "hentai",
         "dekaihentai",
@@ -25,7 +27,7 @@ export default new ElainaPrefixCommand({
     
     const post = new RedditFetch(subreddits, true);
     
-    await post.makeRequest();
+    await post.makeRequest().then(() => reply.delete());;
     
     new ElainaWebhook({ channelId: message.channel.id }, {
       username: post.getSubredditName,

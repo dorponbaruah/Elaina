@@ -49,6 +49,8 @@ export default new ElainaPrefixCommand({
           `**The following argument(s) you have provided are invalid.** (Tip: You can view the list of valid arguments using the **\`${constants.Prefixes[1]}anime list\`** command)\n\n> ❌ \`${givenArgs.filter(val => !validArgs.includes(val.toLowerCase())).join("`, `")}\``
         )
      );
+     
+    const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
    
     const subreddits = {
       series: [
@@ -108,7 +110,7 @@ export default new ElainaPrefixCommand({
     
     const post = new RedditFetch(selectedSubreddits);
     
-    await post.makeRequest();
+    await post.makeRequest().then(() => reply.delete());
     
     new ElainaWebhook({ channelId: message.channel.id }, {
       username: post.getSubredditName,
