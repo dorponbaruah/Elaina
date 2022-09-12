@@ -32,7 +32,7 @@ export default new ElainaPrefixCommand({
         },
         {
           name: "Valid Arguments:",
-          value: `\`\`\`\n${expectedArgs.join(", ")}\`\`\`\n**series:** Series specific.\n\n**funny:** Anime related memes and funny images.\n\n**wallpaper:** Anime-style wallpapers.\n\n**art:** Anime artwork, sketches and manga/comic strips.\n\n**gif:** Animated GIFs.\n\n**irl:** Just anime boys and girls speaking sad things about you (or the truth on you where it hurts).\n\n(When you provide multiple arguments you expect the bot to randomly take one of them)`
+          value: `\`\`\`\n${expectedArgs.join(", ")}\`\`\`\n**series:** Series specific.\n\n**funny:** Anime related memes and funny images.\n\n**wallpaper:** Anime-style wallpapers.\n\n**art:** Anime artwork, sketches and manga/comic strips.\n\n**gif:** Animated GIFs.\n\n**ugh:** Just anime boys and girls speaking sad things about you (or the truth on you where it hurts).\n\n(When you provide multiple arguments you expect the bot to randomly take one of them)`
         },
         {
           name: "Examples:",
