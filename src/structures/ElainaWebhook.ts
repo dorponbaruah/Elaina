@@ -2,13 +2,13 @@ import client, { typings } from "../index";
 import { WebhookMessageOptions, WebhookEditMessageOptions, WebhookClient, WebhookClientDataURL, WebhookClientDataIdWithToken, GuildTextBasedChannel, ThreadChannel, Snowflake, Message } from "discord.js";
 
 export class ElainaWebhook {
-  private _data: typings.IElainaWebhookData;
-  private _send: WebhookMessageOptions;
   private _createdWebhook: string;
+  public webhookData: typings.IElainaWebhookData;
+  public messageOptions: WebhookMessageOptions;
  
-  constructor(data: typings.IElainaWebhookData, sendOptions: WebhookMessageOptions | WebhookEditMessageOptions) {
-    this._data = data;
-    this._send = sendOptions;
+  constructor(data: typings.IElainaWebhookData, options: WebhookMessageOptions | WebhookEditMessageOptions) {
+    this.webhookData = data;
+    this.messageOptions = options;
   }
   
   private async createWebhook(channelId: Snowflake) {
@@ -37,16 +37,16 @@ export class ElainaWebhook {
     let webhookClientData: WebhookClientDataURL | WebhookClientDataIdWithToken | null;
   
     switch (true) {
-      case "url" in this._data:
-        webhookClientData = { url: this._data.url }
+      case "url" in this.webhookData:
+        webhookClientData = { url: this.webhookData.url }
         break;
   
-      case "id" in this._data && "token" in this._data:
-        webhookClientData = { id: this._data.id, token: this._data.token }
+      case "id" in this.webhookData && "token" in this.webhookData:
+        webhookClientData = { id: this.webhookData.id, token: this.webhookData.token }
         break;
   
-      case "channelId" in this._data:
-        await this.createWebhook(this._data.channelId);
+      case "channelId" in this.webhookData:
+        await this.createWebhook(this.webhookData.channelId);
         
         webhookClientData = (
           this._createdWebhook ?
@@ -63,7 +63,7 @@ export class ElainaWebhook {
 
     const webhookClient = new WebhookClient(webhookClientData!);
     
-    return webhookClient.send(this._send);
+    return webhookClient.send(this.messageOptions);
   }
   
   public async edit() {
@@ -71,8 +71,8 @@ export class ElainaWebhook {
     let channel: GuildTextBasedChannel;
     
     switch (true) {
-      case "messageUrl" in this._data:
-        let url = this._data.messageUrl.split("/");
+      case "messageUrl" in this.webhookData:
+        let url = this.webhookData.messageUrl.split("/");
 
         url = url.slice(url.length - 3);
         
@@ -80,9 +80,9 @@ export class ElainaWebhook {
         message = await channel.messages.fetch(url[2]);
         break;
       
-      case "channelId" in this._data && "messageId" in this._data:
-        channel = client.channels.cache.get(this._data.channelId) as GuildTextBasedChannel;
-        message = await channel.messages.fetch(this._data.messageId);
+      case "channelId" in this.webhookData && "messageId" in this.webhookData:
+        channel = client.channels.cache.get(this.webhookData.channelId) as GuildTextBasedChannel;
+        message = await channel.messages.fetch(this.webhookData.messageId);
         break;
       
       default:
@@ -91,7 +91,7 @@ export class ElainaWebhook {
     }
     
     if (channel === null || message === null)
-      throw new Error("No valid APIMessage or channel and message ID specified.")
+      throw new Error("No valid message URL or channel and message ID specified.")
    
     if (!channel || channel instanceof ThreadChannel) return;
    
@@ -105,8 +105,8 @@ export class ElainaWebhook {
     const webhookClient = new WebhookClient({ url: foundWebhook.first().url });
     
     ["username", "avatarURL"]
-      .forEach(key => delete this._send[key]);
+      .forEach(key => delete this.messageOptions[key]);
     
-    webhookClient.editMessage(message.id, this._send);
+    webhookClient.editMessage(message.id, this.messageOptions);
   }
 }
