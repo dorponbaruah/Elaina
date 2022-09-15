@@ -29,16 +29,17 @@ export default new ElainaPrefixCommand({
     
     await post.makeRequest().then(() => reply.delete());;
     
-    new ElainaWebhook({ channelId: message.channel.id }, {
-      username: post.getSubredditName,
-      avatarURL: post.getSubredditIcon,
-      embeds: [
-        new MessageEmbed()
-          .setDescription(post.getPostTitle)
-          .setImage(post.getPostImage)
-          .setColor(constants.Colors.MAIN_EMBED_COLOR)
-          .setFooter({ text: `Sent by ${client.user?.tag}`, iconURL: client.user?.displayAvatarURL() })
-      ]
-    }).send();
+    new ElainaWebhook({ channelId: message.channel.id })
+      .send({
+        username: post.getSubredditName,
+        avatarURL: post.getSubredditIcon,
+        embeds: [
+          new MessageEmbed()
+            .setDescription(post.getPostTitle)
+            .setImage(post.getPostImage)
+            .setColor(constants.Colors.MAIN_EMBED_COLOR)
+            .setFooter({ text: `Sent by ${client.user?.tag}`, iconURL: client.user?.displayAvatarURL() })
+        ]
+      });
   }
 });

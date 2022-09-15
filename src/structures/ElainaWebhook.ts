@@ -4,11 +4,9 @@ import { WebhookMessageOptions, WebhookEditMessageOptions, WebhookClient, Webhoo
 export class ElainaWebhook {
   private _createdWebhook: string;
   public webhookData: typings.IElainaWebhookData;
-  public messageOptions: WebhookMessageOptions;
  
-  constructor(data: typings.IElainaWebhookData, options: WebhookMessageOptions | WebhookEditMessageOptions) {
+  constructor(data: typings.IElainaWebhookData) {
     this.webhookData = data;
-    this.messageOptions = options;
   }
   
   private async createWebhook(channelId: Snowflake) {
@@ -33,7 +31,7 @@ export class ElainaWebhook {
     this._createdWebhook = webhookUrl;
   }
 
-  public async send() {
+  public async send(sendOptions: WebhookMessageOptions) {
     let webhookClientData: WebhookClientDataURL | WebhookClientDataIdWithToken | null;
   
     switch (true) {
@@ -63,10 +61,10 @@ export class ElainaWebhook {
 
     const webhookClient = new WebhookClient(webhookClientData!);
     
-    return webhookClient.send(this.messageOptions);
+    return webhookClient.send(sendOptions);
   }
   
-  public async edit() {
+  public async edit(editOptions: WebhookEditMessageOptions) {
     let message: Message;
     let channel: GuildTextBasedChannel;
     
@@ -104,9 +102,6 @@ export class ElainaWebhook {
     
     const webhookClient = new WebhookClient({ url: foundWebhook.first().url });
     
-    ["username", "avatarURL"]
-      .forEach(key => delete this.messageOptions[key]);
-    
-    webhookClient.editMessage(message.id, this.messageOptions);
+    return webhookClient.editMessage(message.id, editOptions);
   }
 }
