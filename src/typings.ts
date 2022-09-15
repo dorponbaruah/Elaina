@@ -6,7 +6,7 @@ import {
   Message,
   CommandInteraction,
   GuildMember,
-  ApplicationCommandDataResolvable,
+  ChatInputApplicationCommandData,
   ClientEvents,
   WebhookClientDataURL,
   WebhookClientDataIdWithToken,
@@ -45,7 +45,7 @@ export type ElainaSlashCommand = {
     client: ElainaClient,
     interaction: ExtendedCommandInteraction
   ) => any;
-} & Commons & ApplicationCommandDataResolvable;
+} & Commons & ChatInputApplicationCommandData;
 
 export type BotPrefix = typeof constants.Prefixes[number];
 
