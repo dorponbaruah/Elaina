@@ -1,22 +1,27 @@
 import client, { Event, ElainaErrorMessage, typings, constants } from "../index";
-import { Snowflake } from "discord.js";
+import { Snowflake, GuildMember } from "discord.js";
 
 export default new Event("interactionCreate", async (interaction) => {
   // Slash command handler 
   if (interaction.isCommand()) {
     const command = client.slashCommands.get(interaction.commandName);
-    if (!command) return interaction.reply(
-      new ElainaErrorMessage("Something went wrong!", {
-        ephemeral: true
-      })
-    );
-
-    if (command.category.toLowerCase() === "developer" && interaction.user.id !== process.env.developerId)
-      return interaction.reply(
-        new ElainaErrorMessage("This command can only be used by the bot owner.", {
+    
+    const throwError = function(errorMessage: string): void {
+      interaction.reply(
+        new ElainaErrorMessage(errorMessage, {
           ephemeral: true
         })
       );
+    };
+    
+    if (!command) return throwError("This command doesn't exist!");
+    
+    switch (command.category?.toUpperCase().split(" ").join("_")) {
+      case "DEVELOPER":
+        if (interaction.user.id !== process.env.developerId) {
+          return throwError("This command can only be used by the bot owner.");
+        }
+    }
     
     if (command.onlyChannels) {
       if (
@@ -33,11 +38,7 @@ export default new Event("interactionCreate", async (interaction) => {
           if (channel) channels.push(channel.id);
         }
     
-        return interaction.reply(
-          new ElainaErrorMessage(`Use this command in this/these channel(s)\n> <#${channels.join(">, <#")}>`, {
-            ephemeral: true
-          })
-        );
+        return throwError(`Use this command in this/these channel(s)\n> <#${channels.join(">, <#")}>`);
       }
     }
     

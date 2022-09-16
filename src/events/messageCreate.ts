@@ -27,6 +27,14 @@ export default new Event("messageCreate", async (message) => {
     const command = client.prefixCommands.get(cmd.toLowerCase()) || client.prefixCommands.find(c => (c.aliases!.includes(cmd.toLowerCase())) as boolean);
     if (!command) return;
     
+    const throwError = function(errorMessage: string, mentionUser: boolean = false): void {
+      message.reply(
+        new ElainaErrorMessage(errorMessage, {
+          mention: mentionUser
+        })
+      );
+    };
+    
     if (command.onlyChannels) {
       if (
         !command.onlyChannels.includes(msgChannel.name) &&
@@ -42,10 +50,15 @@ export default new Event("messageCreate", async (message) => {
           if (channel) channels.push(channel.id);
         }
         
-        return message.reply(
-          new ElainaErrorMessage(`Use this command in this/these channel(s)\n> <#${channels.join(">, <#")}>`)
-        );
+        return throwError(`Use this command in this/these channel(s)\n> <#${channels.join(">, <#")}>`);
       }
+    }
+    
+    switch (command.category?.toUpperCase().split(" ").join("_")) {
+      case "DEVELOPER":
+        if (msgMember.id !== process.env.developerId) {
+          return throwError("This command can only be used by the bot owner.");
+        }
     }
     
     if (command.category.toLowerCase() === "developer" && msgMember.id !== process.env.developerId)
