@@ -21,6 +21,12 @@ export default new Event("interactionCreate", async (interaction) => {
         if (interaction.user.id !== process.env.developerId) {
           return throwError("This command can only be used by the bot owner.");
         }
+      break;
+      
+      case "SERVER_SETTINGS":
+        if (!(interaction.member as GuildMember).permissions.has("MANAGE_GUILD")) {
+          return throwError("This command can only be used by the server managers.");
+        }
     }
     
     if (command.onlyChannels) {

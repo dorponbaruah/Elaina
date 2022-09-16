@@ -59,6 +59,12 @@ export default new Event("messageCreate", async (message) => {
         if (msgMember.id !== process.env.developerId) {
           return throwError("This command can only be used by the bot owner.");
         }
+      break;
+      
+      case "SERVER_SETTINGS":
+        if (!msgMember.permissions.has("MANAGE_GUILD")) {
+          return throwError("This command can only be used by the server managers.");
+        }
     }
     
     if (command.category.toLowerCase() === "developer" && msgMember.id !== process.env.developerId)
