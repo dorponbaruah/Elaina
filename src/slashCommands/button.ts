@@ -1,8 +1,6 @@
 import { ElainaSlashCommand, ElainaWebhook, ElainaErrorMessage, constants } from "../index";
 import { GuildTextBasedChannel, Role, MessageActionRow, MessageButton, MessageButtonStyleResolvable, Interaction, GuildMember, Snowflake } from "discord.js";
 
-const changes: { roleId: Snowflake, type: "add" | "remove" }[] = [];
-
 export default new ElainaSlashCommand({
   name: "button",
   description: "Useful commands for configuring a message button.",
@@ -152,17 +150,15 @@ export default new ElainaSlashCommand({
   category: "Server settings",
   
   run: async (client, interaction) => {
-    await interaction.reply({ content: `${constants.Emojis.LOADING} Processing...`, ephemeral: true });
+    await interaction.deferReply({ ephemeral: true });
 
-    const { options } = interaction;
+    const { options, guild } = interaction;
     
     let messageURL = options.getString("message_url").split("/");
 
     messageURL = messageURL.slice(messageURL.length - 3);
 
-    const targetChannel = interaction.guild.channels.cache.get(messageURL[1]) as GuildTextBasedChannel;
-
-    const targetMessage = await targetChannel?.messages.fetch(messageURL[2]);
+    const targetMessage = await (guild.channels.cache.get(messageURL[1]) as GuildTextBasedChannel)?.messages.fetch(messageURL[2]);
 
     const rolesForButtonRole: Role[] = [];
     
@@ -173,7 +169,7 @@ export default new ElainaSlashCommand({
       });
     
     const getInvalidInputErrorMessage = (): string | boolean => {
-      const botsHighestRole = interaction.guild.me.roles.highest;
+      const botsHighestRole = guild.me.roles.highest;
       
       switch (true) {
         case !targetMessage:
@@ -189,30 +185,24 @@ export default new ElainaSlashCommand({
           return `The role <@&${rolesForButtonRole.find(role => botsHighestRole.rawPosition < role.rawPosition)?.id}> is above my highest role <@&${botsHighestRole.id}>, which I can't manage.`;
      
         case rolesForButtonRole.filter(role => botsHighestRole.rawPosition === role.rawPosition).length !== 0:
-          return `The role <@&${rolesForButtonRole.find(role => botsHighestRole.rawPosition === role.rawPosition).id}> is my highest role, which I can't manage.`;
+          return `The role <@&${rolesForButtonRole.find(role => botsHighestRole.rawPosition === role.rawPosition)?.id}> is my highest role, which I can't manage.`;
      
         default: 
           return false;
       }
     }
   
-    if (getInvalidInputErrorMessage()) {
-      interaction.editReply(new ElainaErrorMessage("Error!"));
-  
-      await interaction.followUp({
-        content: getInvalidInputErrorMessage() as string,
-        ephemeral: true
-      });
-
-      return;
-    }
+    if (getInvalidInputErrorMessage()) 
+      return interaction.editReply(
+        new ElainaErrorMessage(getInvalidInputErrorMessage() as string)
+      );
     
     const buttonToAdd = new MessageButton()
       .setStyle((options.getString("color") ?? "PRIMARY") as MessageButtonStyleResolvable)
       .setLabel(
         options.getString("label") ??
         (
-          !rolesForButtonRole.length ?
+          options.getSubcommand() !== "role" ?
           "Button" :
           `Click to ${String(options.getNumber("type")).replace("1", "toggle").replace("2", "add").replace("3", "remove")} ${rolesForButtonRole.length} role(s)`
         )
@@ -243,73 +233,66 @@ export default new ElainaSlashCommand({
     );
     
     messageToEdit.edit({ components: [...targetMessage.components] })
-      .then(() => {
-        interaction.editReply(`${constants.Emojis.SUCCESS} Success!`);
-        
-        interaction.followUp({
-          content: `Successfully added the "${options.getSubcommand()}" button to the provided message.`,
-          ephemeral: true
-        });
-      })
-      .catch(error => {
-        interaction.editReply(new ElainaErrorMessage("Error!"));
-        
-        interaction.followUp({
-          content: `Failed to add the "${options.getSubcommand()}" button to the provided message.\n\nError name:\n\`\`\`\n${error.name}\`\`\`\nError message:\n\`\`\`\n${error.message}\`\`\``,
-          ephemeral: true
-        });
-      });
+      .then(() => 
+        interaction.editReply(
+          `${constants.Emojis.SUCCESS} Successfully added the "${options.getSubcommand()}" button to the provided message.`
+        )
+      )
+      .catch(error => 
+        interaction.editReply(
+          new ElainaErrorMessage(`Failed to add the "${options.getSubcommand()}" button to the provided message.\n\nError name:\n\`\`\`\n${error.name}\`\`\`\nError message:\n\`\`\`\n${error.message}\`\`\``)
+        )
+      );
   },
 
   eventListener: {
     event: "interactionCreate",
     run: async (interaction: Interaction) => {
-      if (!interaction.isButton()) return;
+      if (!(interaction.isButton() && interaction.customId.startsWith("e/br:"))) return;
+      await interaction.deferReply({ ephemeral: true });
 
-      const customId = interaction.customId;
-      const member = interaction.member as GuildMember;
-      
-      if (customId.startsWith("e/br:")) {
-        let type = customId.split(":")[1];
-        let roleIds = customId.split(":").slice(2) as Snowflake[];
+      const type = interaction.customId.split(":")[1];
+      const roleIds = interaction.customId.split(":").slice(2) as Snowflake[];
+
+      const changes: { roleId: Snowflake, type: "add" | "remove" } [] = [];
+
+      for (const roleId of roleIds) {
+        const member = interaction.member as GuildMember;
         
-        roleIds.forEach(roleId => {
-          switch (Number(type)) {
-            case 1: //toggle
-              if (member.roles.cache.has(roleId)) {
-                member.roles.remove(roleId)
-                  .then(() => changes.push({ roleId, type: "remove" }));
-              }
-              else {
-                member.roles.add(roleId)
-                  .then(() => changes.push({ roleId, type: "add" }));
-              }1
-              break;
-            
-            case 2: //add
-              if (!member.roles.cache.has(roleId)) {
-                member.roles.add(roleId)
-                  .then(() => changes.push({ roleId, type: "add" }));
-              }
-              break;
-            
-            case 3: //remove
-              if (member.roles.cache.has(roleId)) {
-                member.roles.remove(roleId)
-                  .then(() => changes.push({ roleId, type: "add" }));
-              }
-          }
-        });
-      
-        await interaction.reply({
-          content: (
-            !changes.length ?
-            "No role changes were made." :
-            `I've updated your roles!\n>>> ${changes.map(ele => `${constants.Emojis[ele.type.replace("add", "PLUS").replace("remove", "MINUS")]} <@&${ele.roleId}>`).join("\n")}`
-          ),
-          ephemeral: true
-        });
+        switch (Number(type)) {
+          case 1: //toggle
+            if (member.roles.cache.has(roleId)) {
+              await member.roles.remove(roleId)
+                .then(() => changes.push({ roleId, type: "remove" }));
+            }
+            else {
+              await member.roles.add(roleId)
+                .then(() => changes.push({ roleId, type: "add" }));
+            }
+            break;
+
+          case 2: //add
+            if (!member.roles.cache.has(roleId)) {
+              await member.roles.add(roleId)
+                .then(() => changes.push({ roleId, type: "add" }));
+            }
+            break;
+
+          case 3: //remove
+            if (member.roles.cache.has(roleId)) {
+              await member.roles.remove(roleId)
+                .then(() => changes.push({ roleId, type: "add" }))
+            }
+        }
       }
+
+      interaction.editReply({
+        content: (
+          !changes.length ?
+          "No role changes were made." :
+          `I've updated your roles!\n>>> ${changes.map(ele => `${constants.Emojis[ele.type.replace("add", "PLUS").replace("remove", "MINUS")]} <@&${ele.roleId}>`).join("\n")}`
+        )
+      });
     }
   }
 });
