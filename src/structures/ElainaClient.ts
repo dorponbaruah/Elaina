@@ -24,15 +24,16 @@ export class ElainaClient extends Client<true> {
       `${__dirname}/../prefixCommands/*{.ts,.js}`
     );
     
-    prefixCommandFiles.forEach( async (filepath) => {
+    for (const filepath of prefixCommandFiles) {
       const command: typings.ElainaPrefixCommand = await importFile(filepath);
       if (!command.name) return;
+   
       if (command.eventListener) {
         this.on(command.eventListener.event, command.eventListener.run);
       }
       
       this.prefixCommands.set(command.name, command);
-    });
+    }
     
     // Slash Commands
     const slashCommandFiles = await globPromise(
@@ -41,7 +42,7 @@ export class ElainaClient extends Client<true> {
     
     const arrayOfSlashCommands: ApplicationCommandDataResolvable[] = [];
     
-    slashCommandFiles.forEach( async (filepath) => {
+    for (const filepath of slashCommandFiles) {
       const command: typings.ElainaSlashCommand = await importFile(filepath);
       if (!command.name) return;
       if (command.eventListener) {
@@ -50,15 +51,15 @@ export class ElainaClient extends Client<true> {
       
       this.slashCommands.set(command.name, command);
       arrayOfSlashCommands.push(command);
-    });
+    }
     
     const guildIds: Snowflake[] = JSON.parse((process.env.guildIds) as string);
     
-    this.on("ready", () => {
-      guildIds.forEach( async (guildId) => {
+    this.on("ready", async () => {
+      for (const guildId of guildIds) {
         await this.guilds.cache.get(guildId)!
           .commands.set(arrayOfSlashCommands);
-      });
+      }
     });
     
     // Events
@@ -66,10 +67,10 @@ export class ElainaClient extends Client<true> {
       `${__dirname}/../events/*{.ts,.js}`
     );
     
-    eventFiles.forEach( async (filepath) => {
-      const event: Event<keyof ClientEvents> = await importFile(filepath);
+    for (const filePath of eventFiles) {
+      const event: Event<keyof ClientEvents> = await importFile(filePath);
       
       this.on(event.event, event.run);
-    });
+    }
   }
 }
