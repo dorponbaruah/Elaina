@@ -14,7 +14,11 @@ export const Emojis = {
   ELAINA: "<a:a_elaina:1015651652109344878>",
   LOADING: "<a:D_Loading:930501726270803988>",
   MINUS: "<:minus:930205412597301281>",
-  PLUS: "<:plus:930205440728510465>"
+  PLUS: "<:plus:930205440728510465>",
+  VERSUS: "<:versus:1020912444169793556>",
+  CIRCLE: "<:tictactoe_o:1021142952933855264>",
+  CROSS: "<:tictactoe_x:1021142994319056987>",
+  TADA: "<:tada:1021201711177666650>"
 } as const;
 
 export const ElainaPresenceData = {
