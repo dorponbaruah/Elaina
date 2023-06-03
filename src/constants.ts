@@ -25,7 +25,7 @@ export const ElainaPresenceData = {
   status: "online",
   activities: [
     {
-      name: "You know? Magic will deeply connect us all.",
+      name: "Coding is no fun at all",
       type: "PLAYING"
     }
   ]
