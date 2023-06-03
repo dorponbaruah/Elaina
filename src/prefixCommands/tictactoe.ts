@@ -43,7 +43,7 @@ export default new ElainaPrefixCommand({
       );
 
     message.channel.send({
-        content: `<@${invitedForChallenge.id}>, **${message.member.nickname ?? message.member.username}** challenged you to a duel!`,
+        content: `<@${invitedForChallenge.id}>, **${message.member.nickname ?? message.member.user.username}** challenged you to a duel!`,
         components: [challengeAcceptBtn]
       })
       .then(msg => {
