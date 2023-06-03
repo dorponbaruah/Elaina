@@ -7,12 +7,18 @@ export default new ElainaSlashCommand({
     type: "STRING",
     name: "raw_json",
     description: "Enter json data",
-    require: true
+    required: true
   }],
   category: "Server settings",
   run: (client, interaction) => {
     const str = JSON.parse(interaction.options.getString("raw_json"));
     
-    interaction.channel.send(str);
+    interaction.channel.send(str)
+      .then(() => {
+        interaction.reply({ content: "Successfully sent the message to this channel!", ephemeral: true });
+      })
+      .catch((err) => {
+        interaction.reply({ content: `Error: ${err.message}`, ephemeral: true });
+      });
   }
 });
