@@ -18,6 +18,7 @@ export const Emojis = {
   VERSUS: "<:versus:1020912444169793556>",
   CIRCLE: "<:tictactoe_o:1021142952933855264>",
   CROSS: "<:tictactoe_x:1021142994319056987>",
+  EMPTY: "<:empty:1114611929328123984>",
   TADA: "<:tada:1021201711177666650>"
 } as const;
 

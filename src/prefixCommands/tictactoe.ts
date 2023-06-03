@@ -43,7 +43,7 @@ export default new ElainaPrefixCommand({
       );
 
     message.channel.send({
-        content: `<@${invitedForChallenge.id}>, **${message.member.nickname}** challenged you to a duel!`,
+        content: `<@${invitedForChallenge.id}>, **${message.member.nickname ?? message.member.username}** challenged you to a duel!`,
         components: [challengeAcceptBtn]
       })
       .then(msg => {
@@ -214,7 +214,7 @@ export default new ElainaPrefixCommand({
             rows[r].addComponents(
               new MessageButton()
               .setStyle("SECONDARY")
-              .setLabel(" ")
+              .setEmoji(constants.Emojis.EMPTY)
               .setCustomId(`e/ttt_cell::${JSON.stringify({ player: { x: player_x.id, o: player_o.id }, row: r, column: c })}`)
             );
           }
