@@ -83,7 +83,7 @@ export default new Event("messageCreate", async (message) => {
   
     if (
       message.guildId !== aceKingdomId ||
-      msgContent !== "!ace"
+      msgContent !== "!newsoul"
     ) return;
 
     ["891974559610318878", "902166509701443604"]
