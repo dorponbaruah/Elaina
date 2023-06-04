@@ -95,7 +95,7 @@ export default new ElainaSlashCommand({
     {
       type: "SUB_COMMAND",
       name: "custom_function",
-      description: "Adds a button to a message that will run a custom function.",
+      description: "Adds a button to a message that will call a custom function.",
       options: [
         {
           type: "STRING",
@@ -281,7 +281,7 @@ export default new ElainaSlashCommand({
           case 3: //remove
             if (member.roles.cache.has(roleId)) {
               await member.roles.remove(roleId)
-                .then(() => changes.push({ roleId, type: "add" }))
+                .then(() => changes.push({ roleId, type: "remove" }))
             }
         }
       }
