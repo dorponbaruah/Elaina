@@ -226,7 +226,7 @@ export default new ElainaPrefixCommand({
             new MessageEmbed()
               .setTitle(`${initiator.nickname ?? initiator.user.username} ${constants.Emojis.VERSUS} ${invitedPlayer.nickname ?? invitedPlayer.user.username}`)
               .setThumbnail(`https://cdn.discordapp.com/emojis/${constants.Emojis.CROSS.replace(/\D/g, '')}.png`)
-              .setDescription(`${constants.Emojis.LOADING} <@${player_x.id}>'s turn`)
+              .setDescription(`${constants.Emojis.LOADING} <@${circle_turn ? player_o.id : player_x.id}>'s turn`)
               .setColor(constants.Colors.MAIN_EMBED_COLOR)
           ],
           components: rows
