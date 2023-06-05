@@ -157,6 +157,7 @@ export default new ElainaPrefixCommand({
           msg.edit({
             embeds: [
               (message.embeds[0] as MessageEmbed)
+                .setThumbnail(`https://cdn.discordapp.com/emojis/${constants.Emojis.EMPTY.replace(/\D/g,'')}.png`)
                 .setDescription(`${constants.Emojis.INFO} No one won the game, it's a tie! Let's try again?`)
                 .setColor("#79b2ff")
             ],
@@ -167,11 +168,7 @@ export default new ElainaPrefixCommand({
           msg.edit({
             embeds: [
               (message.embeds[0] as MessageEmbed)
-                .setThumbnail(
-                currentTurn === Marks.CROSS ?
-                `https://cdn.discordapp.com/emojis/${constants.Emojis.CIRCLE.replace(/\D/g,'')}.png` :
-                `https://cdn.discordapp.com/emojis/${constants.Emojis.CROSS.replace(/\D/g, '')}.png`
-              )
+                .setThumbnail(`https://cdn.discordapp.com/emojis/${constants.Emojis.EMPTY.replace(/\D/g,'')}.png`)
                 .setDescription(`${constants.Emojis.TADA} <@${dataPassedInCustomId.player[currentTurn]}> has won the game!`)
                 .setColor("#00ffff")
             ],
