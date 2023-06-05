@@ -1,7 +1,9 @@
 import { ElainaPrefixCommand, constants, ElainaErrorMessage } from "../index";
 import { MessageEmbed, MessageActionRow, MessageActionRowComponent, MessageButton, Message, Interaction, ButtonInteraction, Snowflake, GuildMember } from "discord.js";
 
-let circle_turn: boolean;
+type TurnsInGames = { [key: Snowflake]: boolean };
+
+let circle_turn: TurnsInGames = {};
 
 export default new ElainaPrefixCommand({
   name: "tictactoe",
@@ -71,7 +73,7 @@ export default new ElainaPrefixCommand({
 
       const enum Marks {
         CROSS = "x",
-          CIRCLE = "o"
+        CIRCLE = "o"
       }
 
       const winConditions = [
@@ -176,6 +178,8 @@ export default new ElainaPrefixCommand({
             components: message.components as MessageActionRow[]
           });
         }
+        
+        delete circle_turn[message.id];
       }
 
       if (customId.startsWith("ttt_challenge_button::")) {
@@ -199,6 +203,8 @@ export default new ElainaPrefixCommand({
           }
           return;
         }
+        
+        circle_turn[message.id] = Math.random() < 0.5;
 
         const rows: MessageActionRow[] = [];
 
@@ -226,7 +232,7 @@ export default new ElainaPrefixCommand({
             new MessageEmbed()
               .setTitle(`${initiator.nickname ?? initiator.user.username} ${constants.Emojis.VERSUS} ${invitedPlayer.nickname ?? invitedPlayer.user.username}`)
               .setThumbnail(`https://cdn.discordapp.com/emojis/${constants.Emojis.CROSS.replace(/\D/g, '')}.png`)
-              .setDescription(`${constants.Emojis.LOADING} <@${circle_turn ? player_o.id : player_x.id}>'s turn`)
+              .setDescription(`${constants.Emojis.LOADING} <@${circle_turn[message.id] ? player_o.id : player_x.id}>'s turn`)
               .setColor(constants.Colors.MAIN_EMBED_COLOR)
           ],
           components: rows
@@ -249,7 +255,7 @@ export default new ElainaPrefixCommand({
             })
           );
 
-        const currentTurn = circle_turn ? Marks.CIRCLE : Marks.CROSS;
+        const currentTurn = circle_turn[message.id] ? Marks.CIRCLE : Marks.CROSS;
 
         if (dataPassedInCustomId.player[currentTurn] !== user.id)
           return interaction.reply(
@@ -268,7 +274,7 @@ export default new ElainaPrefixCommand({
             }
           });
 
-        circle_turn = !circle_turn;
+        circle_turn[message.id] = !circle_turn[message.id];
       }
     }
   }
