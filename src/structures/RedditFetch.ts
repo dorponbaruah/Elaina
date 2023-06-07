@@ -54,7 +54,7 @@ export class RedditFetch {
         }));
     }
     catch (error) {
-      throw new Error(error.name+" "+error.message);
+      throw new Error(error.name+" "+error.message+" "+this._subreddit);
     }
   }
   
