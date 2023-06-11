@@ -10,7 +10,7 @@ export default new Event("guildMemberAdd", async (member) => {
   )
     return;
   
-  (member.guild.channels.cache.find(channel => channel.name === "fresh-blood") as GuildTextBasedChannel)
+  (member.guild.channels.cache.get("899960876466057257") as GuildTextBasedChannel)
     .send({
       embeds: [
         new MessageEmbed()

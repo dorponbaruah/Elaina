@@ -10,6 +10,6 @@ export default new Event("guildMemberRemove", async (member) => {
   )
     return;
   
-  (member.guild.channels.cache.find(channel => channel.name === "fresh-blood") as GuildTextBasedChannel)
+  (member.guild.channels.cache.get("899960876466057257") as GuildTextBasedChannel)
     .send(`The feint of heart should not be here, you were warned **${member.user.tag}**`);
 });
