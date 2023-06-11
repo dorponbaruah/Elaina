@@ -26,8 +26,8 @@ export const ElainaPresenceData = {
   status: "online",
   activities: [
     {
-      name: "Coding is no fun at all",
-      type: "PLAYING"
+      name: "Dorpon's messy code",
+      type: "WATCHING"
     }
   ]
 } as PresenceData;
