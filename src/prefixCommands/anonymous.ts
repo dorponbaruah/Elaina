@@ -13,7 +13,7 @@ export default new ElainaPrefixCommand({
         .send({
           username: "Fake Elaina",
           avatarURL: "https://media.discordapp.net/attachments/926846660322160700/1117862760110358620/IMG_20230612_223704.jpg",
-          content: "Whoever tried to use the `anonymous` command doesn't know how to use it. 👎👎\n\nCorrect usage: `e!anonymous <your message here>"
+          content: "Whoever tried to use the `anonymous` command doesn't know how to use it. 👎👎\n\nCorrect usage: `e!anonymous <your message here>`"
         });
         
       return;
