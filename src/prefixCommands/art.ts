@@ -2,20 +2,17 @@ import { ElainaPrefixCommand, ElainaWebhook, RedditFetch, constants } from "../i
 import { MessageEmbed } from "discord.js";
 
 export default new ElainaPrefixCommand({
-  name: "hentai",
-  description: "Lewd anime/manga images UwU.",
-  aliases: ["h"],
+  name: "art",
+  description: "Amazing anime arts.",
+  aliases: [],
   category: "Weeb",
-  onlyChannels: ["hentai"],
+  onlyChannels: ["arts"],
   run: async (client, message, args) => {
     const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
     
-    const subreddits = [
-        "hentai",
-        "ecchi"
-    ];
+    const subreddits = ["animesketch"];
     
-    const post = new RedditFetch(subreddits, true);
+    const post = new RedditFetch(subreddits);
     
     await post.makeRequest().then(() => {
       new ElainaWebhook({ channelId: message.channel.id })
