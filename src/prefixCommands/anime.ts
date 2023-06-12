@@ -114,19 +114,26 @@ export default new ElainaPrefixCommand({
     
     const post = new RedditFetch(selectedSubreddits);
     
-    await post.makeRequest().then(() => reply.delete());
-    
-    new ElainaWebhook({ channelId: message.channel.id })
-      .send({
-        username: post.getSubredditName,
-        avatarURL: post.getSubredditIcon,
-        embeds: [
-          new MessageEmbed()
-            .setDescription(post.getPostTitle)
-            .setImage(post.getPostImage)
-            .setColor(constants.Colors.MAIN_EMBED_COLOR)
-            .setFooter({ text: `Sent by ${client.user?.tag}`, iconURL: client.user?.displayAvatarURL() })
-        ]
+    await post.makeRequest().then(() => {
+        reply.delete();
+        
+        new ElainaWebhook({ channelId: message.channel.id })
+          .send({
+            username: post.getSubredditName,
+            avatarURL: post.getSubredditIcon,
+            embeds: [
+              new MessageEmbed()
+                .setDescription(post.getPostTitle)
+                .setImage(post.getPostImage)
+                .setColor(constants.Colors.MAIN_EMBED_COLOR)
+                .setFooter({ text: `Sent by ${client.user?.tag}`, iconURL: client.user?.displayAvatarURL() })
+            ]
+          });
+      })
+      .catch(() => {
+        reply.delete();
+        
+        message.channel.send(constants.Emojis.ERROR+" No response from the subreddit.");
       });
   }
 });

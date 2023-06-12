@@ -36,7 +36,8 @@ export class RedditFetch {
         }));
     }
     catch (error) {
-      throw new Error(error.name+" "+error.message);
+      console.log(error.name+" "+error.message+" "+this._subreddit);
+      return false;
     }
   }
   
@@ -54,11 +55,14 @@ export class RedditFetch {
         }));
     }
     catch (error) {
-      throw new Error(error.name+" "+error.message+" "+this._subreddit);
+      console.log(error.name+" "+error.message+" "+this._subreddit);
+      return false;
     }
   }
   
   public async makeRequest() {
+    if (!(await this.fetchSubredditData())) return;
+    
     this._postData = await this.fetchPostData();
     this._subredditData = await this.fetchSubredditData();
   }
