@@ -10,7 +10,7 @@ export default new ElainaPrefixCommand({
   run: async (client, message, args) => {
     const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
     
-    const subreddits = ["animememes", "wholesomeanimemes"];
+    const subreddits = ["animememe", "goodanimememes", "wholesomeanimemes"];
     
     const post = new RedditFetch(subreddits);
     
