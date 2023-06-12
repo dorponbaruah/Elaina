@@ -21,7 +21,7 @@ export default new ElainaPrefixCommand({
     
     const text = args.join(" ");
     
-    new ElainaWebhook({ channelId: "" })
+    new ElainaWebhook({ channelId: "899931639860305930" })
       .send({
         username: "Anonymous",
         avatarURL: "https://media.discordapp.net/attachments/926846660322160700/1117862760374612058/779a66f4db83bc65c65256aa52f2a9e0.jpg",
