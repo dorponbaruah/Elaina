@@ -2,7 +2,7 @@ import { ElainaPrefixCommand, ElainaWebhook, RedditFetch, constants } from "../i
 import { MessageEmbed } from "discord.js";
 
 export default new ElainaPrefixCommand({
-  name: "art",
+  name: "waifu",
   description: "Anime waifus.",
   aliases: [],
   category: "Weeb",
