@@ -86,7 +86,6 @@ export default new ElainaPrefixCommand({
       ],
       // Cool wallpapers
       wallpaper: [
-        "animewallpaper",
         "animewallpaperssfw"
       ],
       // Amazing arts
