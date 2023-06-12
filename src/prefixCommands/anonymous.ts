@@ -12,7 +12,7 @@ export default new ElainaPrefixCommand({
       new ElainaWebhook({ channelId: message.channel.id })
         .send({
           username: "Fake Elaina",
-          avatarURL: "",
+          avatarURL: "https://media.discordapp.net/attachments/926846660322160700/1117862760110358620/IMG_20230612_223704.jpg",
           content: "Whoever tried to use the `anonymous` command doesn't know how to use it. 👎👎\n\nCorrect usage: `e!anonymous <your message here>"
         });
         
@@ -24,7 +24,7 @@ export default new ElainaPrefixCommand({
     new ElainaWebhook({ channelId: "" })
       .send({
         username: "Anonymous",
-        avatarURL: "",
+        avatarURL: "https://media.discordapp.net/attachments/926846660322160700/1117862760374612058/779a66f4db83bc65c65256aa52f2a9e0.jpg",
         content: text
       });
   }
