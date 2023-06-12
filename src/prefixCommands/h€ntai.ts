@@ -28,8 +28,6 @@ export default new ElainaPrefixCommand({
     const post = new RedditFetch(subreddits, true);
     
     await post.makeRequest().then(() => {
-      reply.delete()
-      
       new ElainaWebhook({ channelId: message.channel.id })
         .send({
           username: post.getSubredditName,
@@ -43,10 +41,8 @@ export default new ElainaPrefixCommand({
           ]
         });
     })
-      .catch(() => {
-        reply.delete();
-        
-        message.channel.send(constants.Emojis.ERROR + " No response from the subreddit.");
-      });
+    .catch(() => message.channel.send(constants.Emojis.ERROR + " No response from the subreddit."));
+    
+    reply.delete();
   }
 });
