@@ -9,6 +9,7 @@ export default new ElainaPrefixCommand({
   name: "tictactoe",
   description: "Challenge a fellow citizen to a game of TicTacToe.",
   aliases: ["ttt"],
+  onlyChannels: ["fun-bots"],
   category: "Fun",
   run: async (client, message, args) => {
     const invitedForChallenge = message.mentions.users.first();

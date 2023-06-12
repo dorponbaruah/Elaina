@@ -17,7 +17,7 @@ export class RedditFetch {
   }
 
   private async fetchPostData() {
-    return (await fetch(`https://reddit.com/r/${this._subreddit}.json?limit=100`).then(res => res.json())
+    const postData = await fetch(`https://reddit.com/r/${this._subreddit}.json?limit=100`).then(res => res.json())
       .then((body: typings.IRedditListing) => {
         let found = body.data.children;
 
@@ -32,11 +32,13 @@ export class RedditFetch {
         const post = found[index]?.data;
 
         return { title: post?.title, post_url: post?.url.replace("gifv", "gif") } as typings.IRedditPostData;
-      }));
+      });
+    
+    return postData;
   }
 
   private async fetchSubredditData() {
-    return (await fetch(`https://www.reddit.com/r/${this._subreddit}/about.json`).then(res => res.json())
+    const subredditData = await fetch(`https://www.reddit.com/r/${this._subreddit}/about.json`).then(res => res.json())
       .then((body: typings.ISubredditAbout) => {
         const icon = (
           body.data.community_icon !== "" ?
@@ -45,7 +47,9 @@ export class RedditFetch {
         );
 
         return { name: body.data.display_name_prefixed, icon_url: icon } as typings.ISubredditData;
-      }));
+      });
+    
+    return subredditData;
   }
 
   public async makeRequest() {

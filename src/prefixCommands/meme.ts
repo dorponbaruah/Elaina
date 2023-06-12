@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 export default new ElainaPrefixCommand({
   name: "meme",
   description: "Anime memes.",
-  aliases: [],
+  aliases: ["m"],
   category: "Weeb",
   onlyChannels: ["memes"],
   run: async (client, message, args) => {

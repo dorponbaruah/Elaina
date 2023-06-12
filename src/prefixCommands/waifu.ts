@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 export default new ElainaPrefixCommand({
   name: "waifu",
   description: "Anime waifus.",
-  aliases: [],
+  aliases: ["wf"],
   category: "Weeb",
   onlyChannels: ["waifus"],
   run: async (client, message, args) => {

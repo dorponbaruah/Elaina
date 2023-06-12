@@ -5,7 +5,7 @@ export default new ElainaPrefixCommand({
   name: "hentai",
   description: "Lewd anime/manga images UwU.",
   aliases: ["h"],
-  category: "Weeb",
+  category: "NSFW",
   onlyChannels: ["hentai"],
   run: async (client, message, args) => {
     const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);

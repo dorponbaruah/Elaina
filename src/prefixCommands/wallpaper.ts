@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 export default new ElainaPrefixCommand({
   name: "wallpaper",
   description: "Cool anime wallpapers.",
-  aliases: [],
+  aliases: ["wlp"],
   category: "Weeb",
   onlyChannels: ["wallpapers"],
   run: async (client, message, args) => {
