@@ -62,6 +62,7 @@ export default new ElainaPrefixCommand({
     });
     
     const embed = new MessageEmbed()
+      .setColor(constants.Colors.MAIN_EMBED_COLOR)
       .addFields([
         {
           name: `${constants.Emojis.INFO} Info`,
