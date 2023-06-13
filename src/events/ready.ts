@@ -21,7 +21,7 @@ export default new Event("ready", async () => {
     { name: "tentacles", description: "I'm sorry but, why do they look like intestines?", aliases: ["ten"] },
     { name: "thighs", description: "The top part of your legs, very hot, isn't it?", aliases: ["thi"] },
     { name: "uniform", description: "Military, Konbini, Work, Nurse Uniforms, etc!~ Sexy~", aliases: ["uni"] },
-    { name: "gifs", description: "Basically an animated image, so yes :3", aliases: ["gif"] }
+    { name: "hentaigif", description: "Basically an animated image, so yes :3", aliases: [] }
   ];
 
   for (const hentaiCommand of hentaiCommands) {
