@@ -44,8 +44,8 @@ export default new Event("ready", async () => {
             ]
           });
         }).catch(error => {
-          reply.edit(`Failed to fetch an image of \`${hentaiCommand}\``);
-          console.log(error.name + " " + error.message + " | CommandName: " + hentaiCommand);
+          reply.edit(`Failed to fetch an image of \`${hentaiCommand.name}\``);
+          console.log(error.name + " " + error.message + " | CommandName: " + hentaiCommand.name);
         });
       }
     });
@@ -87,8 +87,10 @@ export default new Event("ready", async () => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
 
         const post = new RedditFetch(subreddits[animeCommand.name])
-
-        post.makeRequest().then((found) => {
+        
+        try {
+          await post.makeRequest();
+          
           reply.edit({
             content: null,
             embeds: [
@@ -98,13 +100,13 @@ export default new Event("ready", async () => {
                 .setColor(constants.Colors.MAIN_EMBED_COLOR)
             ]
           });
-        }).catch(error => {
-          reply.edit(`Failed to fetch an image of \`${animeCommand}\``);
-          console.log(error.name + " " + error.message + " | CommandName: " + hentaiCommand);
-        });
+        } catch(error) {
+          reply.edit(`Failed to fetch an image of \`${animeCommand.name}\``);
+          console.log(error.name + " " + error.message + " | CommandName: " + animeCommand.name);
+        }
       }
     });
 
-    bot.prefixCommands.set(animeCommands.name, command as typings.ElainaPrefixCommand);
+    bot.prefixCommands.set(animeCommand.name, command as typings.ElainaPrefixCommand);
   }
 });
