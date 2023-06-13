@@ -32,7 +32,7 @@ export default new ElainaPrefixCommand({
       embeds: [
         new MessageEmbed()
           .setAuthor({ name: `Aliases for the ${args[0]} command`, iconURL: message.member.displayAvatarURL({ dynamic: true }) })
-          .setDecription(aliases)
+          .setDescription(aliases)
       ]
     })
   }
