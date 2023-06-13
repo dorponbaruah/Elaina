@@ -1,5 +1,5 @@
 import client, { Event, ElainaErrorMessage, typings, constants } from "../index";
-import { Snowflake, GuildMember } from "discord.js";
+import { Snowflake, GuildMember, MessageButton, MessageActionRow } from "discord.js";
 
 export default new Event("interactionCreate", async (interaction) => {
   // Slash command handler 
@@ -49,5 +49,23 @@ export default new Event("interactionCreate", async (interaction) => {
     }
     
     command.run(client, interaction as typings.ExtendedCommandInteraction);
+  }
+  ////// Custom function buttons //////
+  if (interaction.isButton()) {
+    // Hentai role confirmation button
+    if (interaction.customId === "HENTAI_ROLE_CONFIRMATION_BUTTON") {
+      interaction.reply({
+        content: "The `hentai` channel is NSFW! Are you sure you want to access that channel?",
+        components: [
+          new MessageActionRow().addComponents(
+            new MessageButton()
+              .setStyle("PRIMARY")
+              .setLabel("Yes, I know what I'm doing.")
+              .setCustomId("e/br:2:962346685592403998")
+          )
+        ],
+        ephemeral: true
+      });
+    }
   }
 });
