@@ -21,7 +21,7 @@ export default new Event("ready", async () => {
     { name: "tentacles", description: "I'm sorry but, why do they look like intestines?", aliases: ["ten"] },
     { name: "thighs", description: "The top part of your legs, very hot, isn't it?", aliases: ["thi"] },
     { name: "uniform", description: "Military, Konbini, Work, Nurse Uniforms, etc!~ Sexy~", aliases: ["uni"] },
-    { name: "hentaigif", description: "Basically an animated image, so yes :3", aliases: [] }
+    { name: "hentaigif", description: "Basically an animated image, so yes :3", aliases: ["hentaigifs"] }
   ];
 
   for (const hentaiCommand of hentaiCommands) {
@@ -34,7 +34,7 @@ export default new Event("ready", async () => {
       run: async (client, message, args) => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
 
-        akaneko.nsfw[hentaiCommand.name]().then((imageUrl: string) => {
+        akaneko.nsfw[hentaiCommand.name.replace("hentaigif", "gif")]().then((imageUrl: string) => {
           reply.edit({
             content: null,
             embeds: [
