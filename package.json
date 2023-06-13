@@ -24,7 +24,8 @@
     "discord.js": "^13.9.2",
     "dotenv": "^16.0.2",
     "glob": "^8.0.3",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7",
+    "akaneko": "^5.2.7"
   },
   "devDependencies": {
     "typescript": "^4.7.3",

@@ -28,11 +28,13 @@ export default new Event("messageCreate", async (message) => {
     if (!command) return;
     
     const throwError = function(errorMessage: string, mentionUser: boolean = false): void {
-      message.reply(
+      const reply = message.reply(
         new ElainaErrorMessage(errorMessage, {
           mention: mentionUser
         })
       );
+      
+      setTimeout(() => message.delete(), 4000);
     };
     
     if (command.onlyChannels) {
