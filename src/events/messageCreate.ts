@@ -34,7 +34,7 @@ export default new Event("messageCreate", async (message) => {
         })
       )
       .then(msg => {
-        setTimeout(() => reply.delete(), 4000);
+        setTimeout(() => msg.delete(), 4000);
       });
     };
     

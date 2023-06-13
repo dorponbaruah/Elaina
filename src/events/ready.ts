@@ -1,4 +1,4 @@
-import bot, { Event, constants, ElainaPrefixCommand, typings } from "../index";
+import bot, { Event, constants, ElainaPrefixCommand, typings, RedditFetch } from "../index";
 import { Guild, MessageEmbed } from "discord.js";
 import akaneko from "akaneko";
 
@@ -6,11 +6,11 @@ export default new Event("ready", async () => {
   console.log(
     `${bot.user?.tag} is up and ready to go!\n\nGuilds: ${bot.guilds.cache.map((guild: Guild) => guild.name).join(", ")}.`
   );
-  
+
   await bot.user?.setPresence(constants.ElainaPresenceData);
-  
+
   // hentai commands
-  const hentaiCommands: { name: string; description: string; aliases: string[] }[] = [
+  const hentaiCommands: { name: string;description: string;aliases: string[] } [] = [
     { name: "hentai", description: "Random vanilla hentai images.", aliases: ["h"] },
     { name: "ass", description: "I know you like anime ass.", aliases: [] },
     { name: "blowjob", description: "Basically an image of a girl sucking on a sharp blade!.", aliases: ["blow"] },
@@ -23,7 +23,7 @@ export default new Event("ready", async () => {
     { name: "uniform", description: "Military, Konbini, Work, Nurse Uniforms, etc!~ Sexy~", aliases: ["uni"] },
     { name: "gifs", description: "Basically an animated image, so yes :3", aliases: ["gif"] }
   ];
-  
+
   for (const hentaiCommand of hentaiCommands) {
     const command = new ElainaPrefixCommand({
       name: hentaiCommand.name,
@@ -33,7 +33,7 @@ export default new Event("ready", async () => {
       onlyChannels: ["hentai"],
       run: async (client, message, args) => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
-      
+
         akaneko.nsfw[hentaiCommand.name]().then((imageUrl: string) => {
           reply.edit({
             content: null,
@@ -44,12 +44,67 @@ export default new Event("ready", async () => {
             ]
           });
         }).catch(error => {
-          reply.edit(`Failed to fetch an image of ${hentaiCommand}`);
-          console.log(error.name+" "+error.message+" | CommandName: "+hentaiCommand);
+          reply.edit(`Failed to fetch an image of \`${hentaiCommand}\``);
+          console.log(error.name + " " + error.message + " | CommandName: " + hentaiCommand);
         });
       }
     });
-    
+
     bot.prefixCommands.set(hentaiCommand.name, command as typings.ElainaPrefixCommand);
+  }
+
+  // anime commands
+  const subreddits = [
+    {
+      wallpaper: ["animewallpaperssfw"]
+    },
+    {
+      meme: ["animemes", "animememe", "goodanimememes", "wholesomeanimemes"]
+    },
+    {
+      art: ["animesketch"]
+    },
+    {
+      waifu: ["waifudiffusion"]
+    }
+  ];
+
+  const animeCommands: { name: string;description: string;aliases: string[] } [] = [
+    { name: "wallpaper", description: "Cool anime wallpapers.", aliases: ["wallpapers", "wal"] },
+    { name: "meme", description: "Funny and wholesome Anime memes.", aliases: ["memes"] },
+    { name: "art", description: "Amazing anime arts.", aliases: ["arts"] },
+    { name: "waifu", description: "Anime waifus~ UWU~", aliases: ["waifu"] }
+  ];
+
+  for (const animeCommand of animeCommands) {
+    const command = new ElainaPrefixCommand({
+      name: animeCommand.name,
+      description: animeCommand.description,
+      aliases: animeCommand.aliases,
+      category: "Anime",
+      onlyChannels: ["anime"],
+      run: async (client, message, args) => {
+        const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
+
+        const post = new RedditFetch(subreddits[animeCommand.name])
+
+        post.makeRequest().then((found) => {
+          reply.edit({
+            content: null,
+            embeds: [
+              new MessageEmbed()
+                .setDescription(found.getPostTitle)
+                .setImage(found.getPostImage)
+                .setColor(constants.Colors.MAIN_EMBED_COLOR)
+            ]
+          });
+        }).catch(error => {
+          reply.edit(`Failed to fetch an image of \`${animeCommand}\``);
+          console.log(error.name + " " + error.message + " | CommandName: " + hentaiCommand);
+        });
+      }
+    });
+
+    bot.prefixCommands.set(animeCommands.name, command as typings.ElainaPrefixCommand);
   }
 });
