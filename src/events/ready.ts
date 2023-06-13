@@ -54,20 +54,12 @@ export default new Event("ready", async () => {
   }
 
   // anime commands
-  const subreddits = [
-    {
-      wallpaper: ["animewallpaperssfw"]
-    },
-    {
-      meme: ["animemes", "animememe", "goodanimememes", "wholesomeanimemes"]
-    },
-    {
-      art: ["animesketch"]
-    },
-    {
+  const subreddits = {
+      wallpaper: ["animewallpaperssfw"],
+      meme: ["animemes", "animememe", "goodanimememes", "wholesomeanimemes"],
+      art: ["animesketch"],
       waifu: ["waifudiffusion"]
-    }
-  ];
+  }
 
   const animeCommands: { name: string;description: string;aliases: string[] } [] = [
     { name: "wallpaper", description: "Cool anime wallpapers.", aliases: ["wallpapers", "wal"] },
