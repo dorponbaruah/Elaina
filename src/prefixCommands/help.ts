@@ -41,23 +41,48 @@ export default new ElainaPrefixCommand({
     client.slashCommands.forEach(command => {
       switch (command.category) {
         case 'Info':
-          commands.info.push(...command.subcommands?.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
+          if (command.subcommand) {
+            commands.info.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
+          }
+          else {
+            commands.info.push(`[/]${command.name}`);
+          }
           break;
     
         case 'Server Settings':
-          commands.serverSettings.push(...command.subcommands?.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
+          if (command.subcommand) {
+            commands.serverSettings.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
+          }
+          else {
+            commands.serverSettings.push(`[/]${command.name}`);
+          }
           break;
     
         case 'Fun':
-          commands.fun.push(...command.subcommands?.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
+          if (command.subcommand) {
+            commands.fun.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
+          }
+          else {
+            commands.fun.push(`[/]${command.name}`);
+          }
           break;
     
         case 'Anime':
-          commands.anime.push(...command.subcommands?.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
+          if (command.subcommand) {
+            commands.anime.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
+          }
+          else {
+            commands.anime.push(`[/]${command.name}`);
+          }
           break;
     
         case 'Hentai':
-          commands.hentai.push(...command.subcommands?.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
+          if (command.subcommand) {
+            commands.hentai.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
+          }
+          else {
+            commands.hentai.push(`[/]${command.name}`);
+          }
       }
     });
     
@@ -82,7 +107,7 @@ export default new ElainaPrefixCommand({
         },
         {
           name: `💀 Hentai`,
-          value: `\`${commands.hentai.join("`, `")}\``
+          value: `||\`${commands.hentai.join("`, `")}\`||`
         }
       ]);
       

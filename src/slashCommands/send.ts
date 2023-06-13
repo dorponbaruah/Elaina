@@ -9,7 +9,7 @@ export default new ElainaSlashCommand({
     description: "Enter json data",
     required: true
   }],
-  category: "Server settings",
+  category: "Server Settings",
   run: (client, interaction) => {
     const str = JSON.parse(interaction.options.getString("raw_json"));
     

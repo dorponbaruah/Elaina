@@ -149,7 +149,7 @@ export default new ElainaSlashCommand({
   
   subcommands: ["button role", "button custom_function"],
   
-  category: "Server settings",
+  category: "Server Settings",
   
   run: async (client, interaction) => {
     await interaction.deferReply({ ephemeral: true });
