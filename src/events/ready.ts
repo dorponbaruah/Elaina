@@ -1,18 +1,16 @@
-import client, { Event, constants, ElainaPrefixCommand } from "../index";
+import bot, { Event, constants, ElainaPrefixCommand, typings } from "../index";
 import { Guild, MessageEmbed } from "discord.js";
 import akaneko from "akaneko";
 
 export default new Event("ready", async () => {
-  const bot = client.user!;
- 
   console.log(
-    `${bot.tag} is up and ready to go!\n\nGuilds: ${client.guilds.cache.map((guild: Guild) => guild.name).join(", ")}.`
+    `${bot.user?.tag} is up and ready to go!\n\nGuilds: ${client.guilds.cache.map((guild: Guild) => guild.name).join(", ")}.`
   );
   
-  await bot.setPresence(constants.ElainaPresenceData);
+  await bot.user?.setPresence(constants.ElainaPresenceData);
   
   // hentai commands
-  const hentaiCommands = [
+  const hentaiCommands: { name: string, description: string, aliases: string[] } = [
     { name: "hentai", description: "Random vanilla hentai images.", aliases: ["h"] },
     { name: "ass", description: "I know you like anime ass.", aliases: [] },
     { name: "blowjob", description: "Basically an image of a girl sucking on a sharp blade!.", aliases: ["blj", "bjb"] },
@@ -33,10 +31,10 @@ export default new Event("ready", async () => {
       aliases: hentaiCommand.aliases,
       category: "Hentai",
       onlyChannels: ["hentai"],
-      run: async (client, message, args) => {
+      run: (client, message, args) => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
       
-        akaneko[hentaiCommand]().then((imageUrl: string) => {
+        akaneko[hentaiCommand.name]().then((imageUrl: string) => {
           reply.edit({
             embeds: [
               new MessageEmbed()
@@ -51,6 +49,6 @@ export default new Event("ready", async () => {
       }
     });
     
-    client.prefixCommands.set(hentaiCommand.name, command);
+    client.prefixCommands.set(hentaiCommand.name, command as typings.ElainaPrefixCommand);
   }
 });
