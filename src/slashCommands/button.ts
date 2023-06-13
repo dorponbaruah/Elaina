@@ -147,6 +147,8 @@ export default new ElainaSlashCommand({
     }
   ],
   
+  subcommands: ["button role", "button custom_function"],
+  
   category: "Server settings",
   
   run: async (client, interaction) => {

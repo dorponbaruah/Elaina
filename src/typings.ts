@@ -41,6 +41,7 @@ export interface ExtendedCommandInteraction extends CommandInteraction {
 }
 
 export type ElainaSlashCommand = {
+  subcommands?: string[];
   run: (
     client: ElainaClient,
     interaction: ExtendedCommandInteraction
