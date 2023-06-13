@@ -4,13 +4,13 @@ import akaneko from "akaneko";
 
 export default new Event("ready", async () => {
   console.log(
-    `${bot.user?.tag} is up and ready to go!\n\nGuilds: ${client.guilds.cache.map((guild: Guild) => guild.name).join(", ")}.`
+    `${bot.user?.tag} is up and ready to go!\n\nGuilds: ${bot.user?.guilds.cache.map((guild: Guild) => guild.name).join(", ")}.`
   );
   
   await bot.user?.setPresence(constants.ElainaPresenceData);
   
   // hentai commands
-  const hentaiCommands: { name: string, description: string, aliases: string[] } = [
+  const hentaiCommands: { name: string; description: string; aliases: string[] }[] = [
     { name: "hentai", description: "Random vanilla hentai images.", aliases: ["h"] },
     { name: "ass", description: "I know you like anime ass.", aliases: [] },
     { name: "blowjob", description: "Basically an image of a girl sucking on a sharp blade!.", aliases: ["blj", "bjb"] },
@@ -31,7 +31,7 @@ export default new Event("ready", async () => {
       aliases: hentaiCommand.aliases,
       category: "Hentai",
       onlyChannels: ["hentai"],
-      run: (client, message, args) => {
+      run: async (client, message, args) => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
       
         akaneko[hentaiCommand.name]().then((imageUrl: string) => {
