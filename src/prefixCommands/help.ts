@@ -41,7 +41,7 @@ export default new ElainaPrefixCommand({
     client.slashCommands.forEach(command => {
       switch (command.category) {
         case 'Info':
-          if (command.subcommand) {
+          if (command.subcommands) {
             commands.info.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
           }
           else {
@@ -50,7 +50,7 @@ export default new ElainaPrefixCommand({
           break;
     
         case 'Server Settings':
-          if (command.subcommand) {
+          if (command.subcommands) {
             commands.serverSettings.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
           }
           else {
@@ -59,7 +59,7 @@ export default new ElainaPrefixCommand({
           break;
     
         case 'Fun':
-          if (command.subcommand) {
+          if (command.subcommands) {
             commands.fun.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
           }
           else {
@@ -68,7 +68,7 @@ export default new ElainaPrefixCommand({
           break;
     
         case 'Anime':
-          if (command.subcommand) {
+          if (command.subcommands) {
             commands.anime.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
           }
           else {
@@ -77,7 +77,7 @@ export default new ElainaPrefixCommand({
           break;
     
         case 'Hentai':
-          if (command.subcommand) {
+          if (command.subcommands) {
             commands.hentai.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
           }
           else {
