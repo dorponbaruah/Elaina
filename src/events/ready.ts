@@ -36,6 +36,7 @@ export default new Event("ready", async () => {
       
         akaneko.nsfw[hentaiCommand.name]().then((imageUrl: string) => {
           reply.edit({
+            content: null,
             embeds: [
               new MessageEmbed()
                 .setImage(imageUrl)
