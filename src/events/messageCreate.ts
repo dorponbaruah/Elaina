@@ -41,7 +41,8 @@ export default new Event("messageCreate", async (message) => {
     if (command.onlyChannels) {
       if (
         !command.onlyChannels.includes(msgChannel.name) &&
-        msgChannel.name !== "chaos"
+        msgChannel.name !== "chaos" &&
+        msgChannel.name !== "bot-setup"
       ) {
         const channels: Snowflake[] = [];
         

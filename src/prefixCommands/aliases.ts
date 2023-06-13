@@ -1,4 +1,4 @@
-import { ElainaPrefixCommand, ElainaErrorMessage } from "../index";
+import { ElainaPrefixCommand, ElainaErrorMessage, constants } from "../index";
 import { MessageEmbed } from "discord.js";
 
 export default new ElainaPrefixCommand({
@@ -31,6 +31,7 @@ export default new ElainaPrefixCommand({
     message.reply({
       embeds: [
         new MessageEmbed()
+          .setColor(constants.Colors.MAIN_EMBED_COLOR)
           .setAuthor({ name: `Aliases for the ${args[0]} command`, iconURL: message.member.displayAvatarURL({ dynamic: true }) })
           .setDescription(aliases)
       ]
