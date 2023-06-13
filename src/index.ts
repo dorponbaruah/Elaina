@@ -4,7 +4,7 @@ import { Intents } from "discord.js";
 
 const client = new ElainaClient({
   allowedMentions: {
-    parse: ["users", "roles"]
+    parse: ["users"]
   },
   intents: [
     Intents.FLAGS.GUILDS,
