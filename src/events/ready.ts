@@ -1,5 +1,5 @@
-import client, { Event, constants, ElainaPrefixCommand, MessageEmbed } from "../index";
-import { Guild } from "discord.js";
+import client, { Event, constants, ElainaPrefixCommand } from "../index";
+import { Guild, MessageEmbed } from "discord.js";
 import akaneko from "akaneko";
 
 export default new Event("ready", async () => {
@@ -26,7 +26,7 @@ export default new Event("ready", async () => {
     { name: "gifs", description: "Basically an animated image, so yes :3", aliases: [] }
   ];
   
-  for (const [index, hentaiCommand] of hentaiCommands.entries()) {
+  for (const hentaiCommand of hentaiCommands) {
     const command = new ElainaPrefixCommand({
       name: hentaiCommand.name,
       description: hentaiCommand.description,
@@ -50,5 +50,7 @@ export default new Event("ready", async () => {
         });
       }
     });
+    
+    client.prefixCommands.set(hentaiCommand.name, command);
   }
 });
