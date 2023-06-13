@@ -90,11 +90,11 @@ export default new ElainaPrefixCommand({
     const helpEmbed = new MessageEmbed()
       .setColor(constants.Colors.MAIN_EMBED_COLOR)
       .setAuthor({ name: "Help Command", iconURL: message.member.displayAvatarURL({ dynamic: true }) })
-      .setDescription(`Hello I'm **${client.user?.username}**, a discord bot designed to server the <@&891974559610318878> of ${message.guild.name}.\n\nMy prefixes are \`e!\` and \`e\`, but pinging me always works.`)
+      .setDescription(`Hello I'm **${client.user?.username}**, a discord bot designed to serve the <@&891974559610318878> of ${message.guild.name}.\n\nMy prefixes are \`e!\` and \`e\`, but pinging me always works.`)
       .setImage("https://media.discordapp.net/attachments/926846660322160700/1118218083681697812/chrome_screenshot_1686674319357.png")
     
     const commandListEmbed = new MessageEmbed()
-      .setDescription("Here is the list of my commands!\n\nMy prefixes are `e!` and `e` \n.")
+      .setDescription("Here is the list of my commands!")
       .setColor(constants.Colors.MAIN_EMBED_COLOR)
       .addFields([
         {
