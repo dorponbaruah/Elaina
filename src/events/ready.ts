@@ -4,7 +4,7 @@ import akaneko from "akaneko";
 
 export default new Event("ready", async () => {
   console.log(
-    `${bot.user?.tag} is up and ready to go!\n\nGuilds: ${bot.user?.guilds.cache.map((guild: Guild) => guild.name).join(", ")}.`
+    `${bot.user?.tag} is up and ready to go!\n\nGuilds: ${bot.guilds.cache.map((guild: Guild) => guild.name).join(", ")}.`
   );
   
   await bot.user?.setPresence(constants.ElainaPresenceData);
@@ -49,6 +49,6 @@ export default new Event("ready", async () => {
       }
     });
     
-    client.prefixCommands.set(hentaiCommand.name, command as typings.ElainaPrefixCommand);
+    bot.prefixCommands.set(hentaiCommand.name, command as typings.ElainaPrefixCommand);
   }
 });
