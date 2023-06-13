@@ -41,23 +41,23 @@ export default new ElainaPrefixCommand({
     client.slashCommands.forEach(command => {
       switch (command.category) {
         case 'Info':
-          commands.info.push(command.subcommands.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
+          commands.info.push(...command.subcommands.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
           break;
     
         case 'Server Settings':
-          commands.serverSettings.push(command.subcommands.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
+          commands.serverSettings.push(...command.subcommands.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
           break;
     
         case 'Fun':
-          commands.fun.push(command.subcommands.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
+          commands.fun.push(...command.subcommands.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
           break;
     
         case 'Anime':
-          commands.anime.push(command.subcommands.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
+          commands.anime.push(...command.subcommands.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
           break;
     
         case 'Hentai':
-          commands.hentai.push(command.subcommands.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
+          commands.hentai.push(...command.subcommands.map(cmdName => `[/]${cmdName}`) || `[/]${command.name}`);
       }
     });
     
