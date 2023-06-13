@@ -34,7 +34,7 @@ export default new Event("messageCreate", async (message) => {
         })
       );
       
-      setTimeout(() => message.delete(), 4000);
+      setTimeout(() => reply.delete(), 4000);
     };
     
     if (command.onlyChannels) {
