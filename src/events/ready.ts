@@ -13,15 +13,15 @@ export default new Event("ready", async () => {
   const hentaiCommands: { name: string; description: string; aliases: string[] }[] = [
     { name: "hentai", description: "Random vanilla hentai images.", aliases: ["h"] },
     { name: "ass", description: "I know you like anime ass.", aliases: [] },
-    { name: "blowjob", description: "Basically an image of a girl sucking on a sharp blade!.", aliases: ["blj", "bjb"] },
+    { name: "blowjob", description: "Basically an image of a girl sucking on a sharp blade!.", aliases: ["blow"] },
     { name: "cum", description: "Basically sticky white stuff that is usually milked from sharpies.", aliases: [] },
-    { name: "panties", description: "I mean... just why? You like underwear?", aliases: ["psy"] },
-    { name: "pussy", description: "The genitals of a female, or a cat, you give the meaning.", aliases: [] },
-    { name: "school", description: "School Uniforms!~ Yatta~!", aliases: [] },
-    { name: "tentacles", description: "I'm sorry but, why do they look like intestines?", aliases: [] },
-    { name: "thighs", description: "The top part of your legs, very hot, isn't it?", aliases: [] },
-    { name: "uniform", description: "Military, Konbini, Work, Nurse Uniforms, etc!~ Sexy~", aliases: [] },
-    { name: "gifs", description: "Basically an animated image, so yes :3", aliases: [] }
+    { name: "panties", description: "I mean... just why? You like underwear?", aliases: ["pan"] },
+    { name: "pussy", description: "The genitals of a female, or a cat, you give the meaning.", aliases: ["pus"] },
+    { name: "school", description: "School Uniforms!~ Yatta~!", aliases: ["sch"] },
+    { name: "tentacles", description: "I'm sorry but, why do they look like intestines?", aliases: ["ten"] },
+    { name: "thighs", description: "The top part of your legs, very hot, isn't it?", aliases: ["thi"] },
+    { name: "uniform", description: "Military, Konbini, Work, Nurse Uniforms, etc!~ Sexy~", aliases: ["uni"] },
+    { name: "gifs", description: "Basically an animated image, so yes :3", aliases: ["gif"] }
   ];
   
   for (const hentaiCommand of hentaiCommands) {
