@@ -34,7 +34,7 @@ export default new Event("ready", async () => {
       run: async (client, message, args) => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
       
-        akaneko[hentaiCommand.name]().then((imageUrl: string) => {
+        akaneko.nsfw[hentaiCommand.name]().then((imageUrl: string) => {
           reply.edit({
             embeds: [
               new MessageEmbed()
