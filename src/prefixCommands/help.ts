@@ -87,6 +87,8 @@ export default new ElainaPrefixCommand({
     });
     
     const embed = new MessageEmbed()
+      .setAuthor({ name: "Help Command", iconURL: message.member.displayAvatarURL({ dynamic: true }) })
+      .setDescription("Here is the list of my commands!\n[/] – Slash commands\n.")
       .setColor(constants.Colors.MAIN_EMBED_COLOR)
       .addFields([
         {
