@@ -23,7 +23,7 @@ export default new ElainaPrefixCommand({
     
     new ElainaWebhook({ channelId: "899931639860305930" })
       .send({
-        username: "Anonymous",
+        username: "Anonymous#"+Math.floor(1000 + Math.random() * 9000),
         avatarURL: "https://media.discordapp.net/attachments/926846660322160700/1117862760374612058/779a66f4db83bc65c65256aa52f2a9e0.jpg",
         content: text
       });
