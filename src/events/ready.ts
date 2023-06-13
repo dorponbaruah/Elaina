@@ -95,8 +95,8 @@ export default new Event("ready", async () => {
             content: null,
             embeds: [
               new MessageEmbed()
-                .setDescription(found.getPostTitle)
-                .setImage(found.getPostImage)
+                .setDescription(post.getPostTitle)
+                .setImage(post.getPostImage)
                 .setColor(constants.Colors.MAIN_EMBED_COLOR)
             ]
           });
