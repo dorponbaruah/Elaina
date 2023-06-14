@@ -30,6 +30,7 @@ export default new Event("ready", async () => {
       description: hentaiCommand.description,
       aliases: hentaiCommand.aliases,
       category: "Hentai",
+      usage: hentaiCommand.name,
       onlyChannels: ["hentai"],
       run: async (client, message, args) => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
@@ -74,6 +75,7 @@ export default new Event("ready", async () => {
       description: animeCommand.description,
       aliases: animeCommand.aliases,
       category: "Anime",
+      usage: animeCommand.name,
       onlyChannels: ["anime"],
       run: async (client, message, args) => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
