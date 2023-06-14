@@ -1,4 +1,4 @@
-import { ElainaPrefixCommand, constants } from "../index";
+import { ElainaPrefixCommand, ElainaErrorMessage, constants } from "../index";
 import { MessageEmbed } from "discord.js";
 
 export default new ElainaPrefixCommand({

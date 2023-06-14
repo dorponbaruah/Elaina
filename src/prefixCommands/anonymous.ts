@@ -5,7 +5,7 @@ export default new ElainaPrefixCommand({
   description: "Anonymously send a message in #chat",
   aliases: ["anym"],
   category: "Fun",
-  aliases: "{prefix}anonymous `<text>`",
+  usage: "{prefix}anonymous `<text>`",
   examples: ["{prefix}anonymous Hello, you'll never know who sent this message."],
   run: (client, message, args) => {
     message.delete();
