@@ -6,7 +6,9 @@ export default new ElainaPrefixCommand({
   description: "Get the aliases for a specific prefix command.",
   aliases: [],
   category: "Info",
-  onlyChannels: ["commands"],
+  usage: "{prefix}aliases `<command name>`",
+  examples: ["{prefix}aliases tictactoe"],
+  onlyChannels: ["commands", "fun-bots", "hentai", "anime"],
   run: (client, message, args) => {
     if (!args[0]) {
       return message.reply(
@@ -20,7 +22,7 @@ export default new ElainaPrefixCommand({
     
     if (!command) {
       return message.reply(
-        new ElainaErrorMessage("The command you specified doesn't exist!", {
+        new ElainaErrorMessage("The command you specified is either a **`slash command`** or is invalid.", {
           mention: true
         })
       );

@@ -29,6 +29,8 @@ export type ElainaPrefixCommand = {
   name: string;
   aliases: string[];
   description: string;
+  usage: string;
+  examples?: string[];
   run: (
     client: ElainaClient,
     message: Message,

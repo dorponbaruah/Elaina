@@ -3,11 +3,53 @@ import { MessageEmbed } from "discord.js";
 
 export default new ElainaPrefixCommand({
   name: "help",
-  description: "List of my commands.",
+  description: "Get the list of my commands or more info on a specific prefix command.",
   aliases: ["commands", "cmds"],
   category: "Info",
-  onlyChannels: ["commands"],
+  onlyChannels: ["commands", "fun-bots", "hentai", "anime"],
+  usage: "{prefix}help `[command name]`",
+  examples: ["{prefix}help", "{prefix}help tictactoe"],
   run: (client, message, args) => {
+    if (args[0]) {
+      const command = client.prefixCommands.get(args[0]);
+      
+      if (!command) {
+        return message.reply(
+          new ElainaErrorMessage("The command you specified is either a **`slash command`** or is invalid.", {
+            mention: true
+          })
+        );
+      }
+      
+      const embedFields = [
+        {
+          name: "Usage:",
+          value: command.usage.replace("{prefix}", constants.Prefixes[1])
+        },
+        {
+          name: "Remove brackets when typing commands",
+          value: "> [] = optional arguments\n> <> = required arguments"
+        }
+      ];
+      
+      if (command.examples?.length) {
+        embedFields.push({
+          name: "Example(s):",
+          value: command.examples.join("\n").replace("{prefix}", constants.Prefixes[1])
+        });
+      }
+      
+      return message.reply({
+        embeds: [
+          new MessageEmbed()
+            .setAuthor({ name: `${command.name} Command`, iconURL: message.member.displayAvatarURL({ dynamic: true }) })
+            .setColor(constants.Colors.MAIN_EMBED_COLOR)
+            .setDescription(command.description)
+            .addFields(embedFields)
+        ]
+      });
+    }
+    
     const commands: { [key: string]: string[] } = {
       info: [],
       serverSettings: [],
@@ -90,7 +132,7 @@ export default new ElainaPrefixCommand({
     const helpEmbed = new MessageEmbed()
       .setColor(constants.Colors.MAIN_EMBED_COLOR)
       .setAuthor({ name: "Help Command", iconURL: message.member.displayAvatarURL({ dynamic: true }) })
-      .setDescription(`Hello I'm **${client.user?.username}**, a discord bot designed to serve the <@&891974559610318878> of ${message.guild.name}.\n\nMy prefixes are \`e!\` and \`e\`, but mentioning (@) me always works.`)
+      .setDescription(`Hello I'm **${client.user?.username}**, a discord bot designed to serve the <@&891974559610318878> of ${message.guild.name}.\n\nMy prefixes are '\`e!\`' and '\`e\`', however mentioning (@) me always works.`)
       .setImage("https://media.discordapp.net/attachments/926846660322160700/1118218083681697812/chrome_screenshot_1686674319357.png")
     
     const commandListEmbed = new MessageEmbed()
@@ -119,6 +161,6 @@ export default new ElainaPrefixCommand({
         }
       ]);
       
-    message.channel.send({ embeds: [helpEmbed, commandListEmbed] });
+    message.reply({ embeds: [helpEmbed, commandListEmbed] });
   }
 });

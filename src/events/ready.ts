@@ -11,17 +11,17 @@ export default new Event("ready", async () => {
 
   // hentai commands
   const hentaiCommands: { name: string;description: string;aliases: string[] } [] = [
-    { name: "hentai", description: "Random vanilla hentai images.", aliases: ["h"] },
-    { name: "ass", description: "I know you like anime ass.", aliases: [] },
-    { name: "blowjob", description: "Basically an image of a girl sucking on a sharp blade!.", aliases: ["blow"] },
-    { name: "cum", description: "Basically sticky white stuff that is usually milked from sharpies.", aliases: [] },
-    { name: "panties", description: "I mean... just why? You like underwear?", aliases: ["pan"] },
-    { name: "pussy", description: "The genitals of a female, or a cat, you give the meaning.", aliases: ["pus"] },
-    { name: "school", description: "School Uniforms!~ Yatta~!", aliases: ["sch"] },
-    { name: "tentacles", description: "I'm sorry but, why do they look like intestines?", aliases: ["ten"] },
-    { name: "thighs", description: "The top part of your legs, very hot, isn't it?", aliases: ["thi"] },
-    { name: "uniform", description: "Military, Konbini, Work, Nurse Uniforms, etc!~ Sexy~", aliases: ["uni"] },
-    { name: "hentaigif", description: "Basically an animated image, so yes :3", aliases: ["hentaigifs"] }
+    { name: "hentai", description: "Random vanilla hentai images.", aliases: ["h"], usage: "hentai" },
+    { name: "ass", description: "I know you like anime ass.", aliases: [], usage: "ass" },
+    { name: "blowjob", description: "Basically an image of a girl sucking on a sharp blade!.", aliases: ["blow"], usage: "blowjob" },
+    { name: "cum", description: "Basically sticky white stuff that is usually milked from sharpies.", aliases: [], usage: "cum" },
+    { name: "panties", description: "I mean... just why? You like underwear?", aliases: ["pan"], usage: "panties" },
+    { name: "pussy", description: "The genitals of a female, or a cat, you give the meaning.", aliases: ["pus"], usage: "pussy" },
+    { name: "school", description: "School Uniforms!~ Yatta~!", aliases: ["sch"], usage: "school" },
+    { name: "tentacles", description: "I'm sorry but, why do they look like intestines?", aliases: ["ten"], usage: "tentacles" },
+    { name: "thighs", description: "The top part of your legs, very hot, isn't it?", aliases: ["thi"], usage: "thighs" },
+    { name: "uniform", description: "Military, Konbini, Work, Nurse Uniforms, etc!~ Sexy~", aliases: ["uni"], usage: "uniform" },
+    { name: "hentaigif", description: "Basically an animated image, so yes :3", aliases: ["hentaigifs"], usage: "hentaigif" }
   ];
 
   for (const hentaiCommand of hentaiCommands) {
@@ -62,10 +62,10 @@ export default new Event("ready", async () => {
   }
 
   const animeCommands: { name: string;description: string;aliases: string[] } [] = [
-    { name: "wallpaper", description: "Cool anime wallpapers.", aliases: ["wallpapers", "wal"] },
-    { name: "meme", description: "Funny and wholesome Anime memes.", aliases: ["memes"] },
-    { name: "art", description: "Amazing anime arts.", aliases: ["arts"] },
-    { name: "waifu", description: "Anime waifus~ UWU~", aliases: ["waifu"] }
+    { name: "wallpaper", description: "Cool anime wallpapers.", aliases: ["wallpapers", "wal"], usage: "wallpaper" },
+    { name: "meme", description: "Funny and wholesome Anime memes.", aliases: ["memes"], usage: "meme" },
+    { name: "art", description: "Amazing anime arts.", aliases: ["arts"], usage: "art" },
+    { name: "waifu", description: "Anime waifus~ UWU~", aliases: ["waifu"], usage: "waifu" }
   ];
 
   for (const animeCommand of animeCommands) {

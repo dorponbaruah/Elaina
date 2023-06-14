@@ -11,6 +11,8 @@ export default new ElainaPrefixCommand({
   aliases: ["ttt"],
   onlyChannels: ["fun-bots"],
   category: "Fun",
+  usage: "{prefix}tictactoe `<@user>`",
+  examples: ["{prefix}tictactoe <@>"],
   run: async (client, message, args) => {
     const invitedForChallenge = message.mentions.users.first();
 
