@@ -12,7 +12,7 @@ export default new ElainaPrefixCommand({
   onlyChannels: ["fun-bots"],
   category: "Fun",
   usage: "{prefix}tictactoe `<@user>`",
-  examples: ["{prefix}tictactoe <@>"],
+  examples: ["{prefix}tictactoe <@826899456909770763>"],
   run: async (client, message, args) => {
     const invitedForChallenge = message.mentions.users.first();
 

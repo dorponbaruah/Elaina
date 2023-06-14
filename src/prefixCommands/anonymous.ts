@@ -2,7 +2,7 @@ import { ElainaPrefixCommand, ElainaWebhook, ElainaErrorMessage } from "../index
 
 export default new ElainaPrefixCommand({
   name: "anonymous",
-  description: "Anonymously send a message in #chat",
+  description: "Anonymously send a message in <#899931639860305930>",
   aliases: ["anym"],
   category: "Fun",
   usage: "{prefix}anonymous `<text>`",
