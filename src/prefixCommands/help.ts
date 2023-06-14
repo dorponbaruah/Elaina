@@ -28,7 +28,7 @@ export default new ElainaPrefixCommand({
         },
         {
           name: "Remove brackets when typing commands",
-          value: "```\n [] = optional arguments\n <> = required arguments```"
+          value: "```[] = optional arguments\n<> = required arguments```"
         }
       ];
       
@@ -136,7 +136,7 @@ export default new ElainaPrefixCommand({
       .setImage("https://media.discordapp.net/attachments/926846660322160700/1118218083681697812/chrome_screenshot_1686674319357.png")
     
     const commandListEmbed = new MessageEmbed()
-      .setDescription(`Here is the list of my commands!\n\nUse ${constants.Prefixes[1]}help [command name] to get info on a specific command. (Doesn't work for \`[/]\`slash commands)`)
+      .setDescription(`Here is the list of my commands!\n\nUse ${constants.Prefixes[1]}help \`[command name]\` to get info on a specific command. (Doesn't work for \`[/]\`slash commands)`)
       .setColor(constants.Colors.MAIN_EMBED_COLOR)
       .addFields([
         {
