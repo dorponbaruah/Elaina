@@ -10,7 +10,7 @@ export default new Event("ready", async () => {
   await bot.user?.setPresence(constants.ElainaPresenceData);
 
   // hentai commands
-  const hentaiCommands: { name: string;description: string;aliases: string[] } [] = [
+  const hentaiCommands: { name: string; description: string; aliases: string[]; usage: string }[] = [
     { name: "hentai", description: "Random vanilla hentai images.", aliases: ["h"], usage: "hentai" },
     { name: "ass", description: "I know you like anime ass.", aliases: [], usage: "ass" },
     { name: "blowjob", description: "Basically an image of a girl sucking on a sharp blade!.", aliases: ["blow"], usage: "blowjob" },
@@ -61,7 +61,7 @@ export default new Event("ready", async () => {
       waifu: ["waifudiffusion"]
   }
 
-  const animeCommands: { name: string;description: string;aliases: string[] } [] = [
+  const animeCommands: { name: string; description: string; aliases: string[]; usage: string }[] = [
     { name: "wallpaper", description: "Cool anime wallpapers.", aliases: ["wallpapers", "wal"], usage: "wallpaper" },
     { name: "meme", description: "Funny and wholesome Anime memes.", aliases: ["memes"], usage: "meme" },
     { name: "art", description: "Amazing anime arts.", aliases: ["arts"], usage: "art" },
