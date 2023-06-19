@@ -78,23 +78,4 @@ export default new Event("messageCreate", async (message) => {
     
     command.run(client, message, args);
   }
-  
-  // Member verification
-  if (msgChannel.name.includes("gatehouse")) {
-    message.delete();
-  
-    const aceKingdomId: string = JSON.parse((process.env.guildIds) as string)[1];
-  
-    if (
-      message.guildId !== aceKingdomId ||
-      msgContent !== "!newsoul"
-    ) return;
-
-    ["891974559610318878", "902166509701443604"]
-      .forEach(role => {
-        msgMember.roles.add(role, "Autorole")
-      });
-  
-    msgMember.send(`Welcome to ${msgGuild.name} <@${msgMember.id}> ${constants.Emojis.ELAINA}`);
-  }
 });
