@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Destiny-746/Elaina.git"
+    "url": "git+https://github.com/dorponbaruah/Elaina.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Destiny-746/Elaina/issues"
+    "url": "https://github.com/dorponbaruah/Elaina/issues"
   },
-  "homepage": "https://github.com/Destiny-746/Elaina#readme",
+  "homepage": "https://github.com/dorponbaruah/Elaina#readme",
   "dependencies": {
     "discord-api-types": "^0.37.9",
     "discord.js": "^13.9.2",
