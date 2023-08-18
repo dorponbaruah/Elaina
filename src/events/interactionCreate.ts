@@ -1,5 +1,5 @@
 import client, { Event, ElainaErrorMessage, typings, constants } from "../index";
-import { Snowflake, GuildMember, MessageButton, MessageActionRow } from "discord.js";
+import { Snowflake, GuildMember, MessageButton, MessageActionRow, Message, User } from "discord.js";
 
 export default new Event("interactionCreate", async (interaction) => {
   // Slash command handler 
@@ -66,6 +66,40 @@ export default new Event("interactionCreate", async (interaction) => {
         ],
         ephemeral: true
       });
+    }
+    
+    const { message, customId, member, channel } = interaction;
+    
+    if (customId === "PIN_THE_MESSAGE_MAN") {
+      try {
+        await (message as Message).pin(`${member.user.username} pinned in ${channel.name}`);
+    
+        (message.components[0].components[0] as MessageButton)
+          .setLabel("Pinned")
+          .setDisabled(true);
+    
+        interaction.update({
+          components: message.components as MessageActionRow[]
+        });
+      }
+      catch (error) {
+        console.error(error);
+    
+        interaction.reply({ content: `Failed to pin the message.\n\n**Error message**:\n\`\`\`${error.message}\n\`\`\``, ephemeral: true });
+      }
+    }
+    
+    if (customId === "SEND_IN_MY_DMS") {
+      try {
+        await (member.user as User).send({ embeds: message.embeds });
+    
+        interaction.reply({ content: "Check your DMs!", ephemeral: true });
+      }
+      catch (error) {
+        console.error(error);
+    
+        interaction.reply({ content: `Failed to send DM!\n\n**Error message**:\n\`\`\`${error.message}\n\`\`\``, ephemeral: true });
+      }
     }
   }
 });

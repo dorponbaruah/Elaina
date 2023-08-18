@@ -1,5 +1,5 @@
 import bot, { Event, constants, ElainaPrefixCommand, typings } from "../index";
-import { Guild, MessageEmbed } from "discord.js";
+import { Guild, MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
 import akaneko from "akaneko";
 import { randomImageFromSub } from "justreddit";
 
@@ -9,7 +9,22 @@ export default new Event("ready", async () => {
   );
 
   await bot.user?.setPresence(constants.ElainaPresenceData);
-
+  
+  const pinAndSendDmButtons = new MessageActionRow()
+    .addComponents(
+      new MessageButton()
+      .setStyle("SUCCESS")
+      .setLabel("Pin")
+      .setEmoji("📌")
+      .setCustomId("PIN_THE_MESSAGE_MAN"),
+  
+      new MessageButton()
+      .setStyle("PRIMARY")
+      .setLabel("Save in DM")
+      .setEmoji("✉️")
+      .setCustomId("SEND_IN_MY_DMS")
+    );
+  
   // hentai commands
   const hentaiCommands: { name: string;description: string;aliases: string[];usage: string } [] = [
     { name: "hentai", description: "Random vanilla hentai images.", aliases: ["h"], usage: "hentai" },
@@ -43,7 +58,8 @@ export default new Event("ready", async () => {
               new MessageEmbed()
                 .setImage(imageUrl)
                 .setColor(constants.Colors.MAIN_EMBED_COLOR)
-            ]
+            ],
+            components: [pinAndSendDmButtons]
           });
         }).catch(error => {
           reply.edit(`Failed to fetch an image of \`${hentaiCommand.name}\``);
@@ -90,7 +106,8 @@ export default new Event("ready", async () => {
                 new MessageEmbed()
                   .setImage(image)
                   .setColor(constants.Colors.MAIN_EMBED_COLOR)
-              ]
+            ],
+            components: [pinAndSendDmButtons]
           });
         }
         catch (error) {
