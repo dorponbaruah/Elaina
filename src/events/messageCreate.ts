@@ -1,4 +1,4 @@
-import client, { Event, ElainaErrorMessage, typings, constants } from "../index";
+import client, { Event, ElainaErrorMessage, typings, constants, ElainaWebhook } from "../index";
 import { GuildTextBasedChannel, Snowflake } from "discord.js";
 
 export default new Event("messageCreate", async (message) => {
@@ -11,6 +11,18 @@ export default new Event("messageCreate", async (message) => {
     msgChannel = (message.channel!) as GuildTextBasedChannel,
     msgMember = message.member!,
     msgGuild = message.guild!;
+  
+  if (msgContent.startsWith("google ") && msgContent.trim().length > 6) {
+    const searchString = `https://www.google.com/search?q=${msgContent.trim().slice(7).split(/ +/g).join('+')}`;
+    
+    new ElainaWebhook({ channelId: msgChannel.id })
+    .send({
+      username: msgMember.nickname ?? msgMember.user.username,
+      avatarURL: msgMember.displayAvatarURL({ size: 2048 }),
+      content: `${message.mentions.repliedUser ? "<@"+message.mentions.repliedUser.id+">\n" : ''}[${msgContent}](<${searchString}>)`
+    })
+    .then(() => message.delete());
+  }
   
   // Prefix command handler
   let prefix: typings.BotPrefix = constants.Prefixes[0];
