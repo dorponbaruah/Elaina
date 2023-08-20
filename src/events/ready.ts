@@ -37,7 +37,7 @@ export default new Event("ready", async () => {
     { name: "school", description: "School Uniforms!~ Yatta~!", aliases: ["sch"], usage: "{prefix}school" },
     { name: "tentacles", description: "I'm sorry but, why do they look like intestines?", aliases: ["ten"], usage: "{prefix}tentacles" },
     { name: "thighs", description: "The top part of your legs, very hot, isn't it?", aliases: ["thi"], usage: "{prefix}thighs" },
-    { name: "uniform", description: "Military, Konbini, Work, Nurse Uniforms, etc!~ Sexy~", aliases: ["uni"], usage: "{prefix}uniform" },
+    { name: "uwuniform", description: "Military, Konbini, Work, Nurse Uniforms, etc!~ Sexy~", aliases: ["uwni"], usage: "{prefix}uwuniform" },
     { name: "hentaigif", description: "Basically an animated image, so yes :3", aliases: ["hentaigifs"], usage: "{prefix}hentaigif" }
   ];
 
@@ -52,7 +52,7 @@ export default new Event("ready", async () => {
       run: async (client, message, args) => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
 
-        akaneko.nsfw[hentaiCommand.name.replace("hentaigif", "gif")]().then((imageUrl: string) => {
+        akaneko.nsfw[hentaiCommand.name.replace("hentaigif", "gif").replace("uwuniform", "uniform")]().then((imageUrl: string) => {
           reply.edit({
             content: null,
             embeds: [
@@ -125,7 +125,7 @@ export default new Event("ready", async () => {
     { name: "marin-kitagawa", description: "Marin Kitagawa is the main female protagonist of the anime and manga series My Dress-Up Darling.", aliases: ["marin", "kitagawa", "m-k"], usage: "{prefix}marin-kitagawa" },
     { name: "raiden-shogun", description: "Raiden Shogun is a playable character in Genshin Impact.", aliases: ["raiden", "shogun", "r-s"], usage: "{prefix}raiden-shogun" },
     { name: "selfies", description: "Anime girl selfies~ UWU~", aliases: ["sel"], usage: "" },
-    { name: "uniform", description: "Anime girl in School Uniform~ UWU~", aliases: ["uni"], usage: "{prefix}uniform" },
+    { name: "uniform", description: "Anime girl in Uniform~ UWU~", aliases: ["uni"], usage: "{prefix}uniform" },
   ];
 
   for (const waifuCommand of waifuCommands) {
