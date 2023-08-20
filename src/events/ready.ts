@@ -154,7 +154,6 @@ export default new Event("ready", async () => {
               embeds: [
                 new MessageEmbed()
                   .setImage(data.images[0].url)
-                  .setDescription(data.images[0].tags[0].description)
                   .setColor(constants.Colors.MAIN_EMBED_COLOR)
               ],
               components: [pinAndSendDmButtons]
