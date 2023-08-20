@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 export default new ElainaPrefixCommand({
   name: "hindijoke",
   description: "Sends a random hindi (हिंदी) joke.",
-  aliases: ["indianjoke", "hj"],
+  aliases: ["indianjoke", "bhaijoke"],
   category: "Fun",
   onlyChannels: ["chat", "fun-bots", "royal-knights", "captains"],
   usage: "{prefix}hindijoke",
