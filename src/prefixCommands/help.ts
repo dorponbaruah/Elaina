@@ -6,7 +6,7 @@ export default new ElainaPrefixCommand({
   description: "Get the list of my commands or more info on a specific prefix command.",
   aliases: ["commands", "cmds"],
   category: "Info",
-  onlyChannels: ["commands", "fun-bots", "hentai", "anime"],
+  onlyChannels: ["commands", "fun-bots", "hentai", "anime", "waifu"],
   usage: "{prefix}help `[command name]`",
   examples: ["{prefix}help", "{prefix}help tictactoe"],
   run: (client, message, args) => {
