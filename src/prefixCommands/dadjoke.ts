@@ -23,7 +23,7 @@ export default new ElainaPrefixCommand({
         console.error(error);
 
         message.reply(
-          new ElainaErrorMessage("Failed to find a joke! :(", {
+          new ElainaErrorMessage("No joke found this time. Mind trying again?", {
             mention: true
           })
         );
