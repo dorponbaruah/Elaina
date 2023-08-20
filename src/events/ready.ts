@@ -28,17 +28,17 @@ export default new Event("ready", async () => {
 
   // hentai commands
   const hentaiCommands: { name: string;description: string;aliases: string[];usage: string } [] = [
-    { name: "hentai", description: "Random vanilla hentai images.", aliases: ["h"], usage: "hentai" },
-    { name: "ass", description: "I know you like anime ass.", aliases: [], usage: "ass" },
-    { name: "blowjob", description: "Basically an image of a girl sucking on a sharp blade!.", aliases: ["blow"], usage: "blowjob" },
-    { name: "cum", description: "Basically sticky white stuff that is usually milked from sharpies.", aliases: [], usage: "cum" },
-    { name: "panties", description: "I mean... just why? You like underwear?", aliases: ["pan"], usage: "panties" },
-    { name: "pussy", description: "The genitals of a female, or a cat, you give the meaning.", aliases: ["pus"], usage: "pussy" },
-    { name: "school", description: "School Uniforms!~ Yatta~!", aliases: ["sch"], usage: "school" },
-    { name: "tentacles", description: "I'm sorry but, why do they look like intestines?", aliases: ["ten"], usage: "tentacles" },
-    { name: "thighs", description: "The top part of your legs, very hot, isn't it?", aliases: ["thi"], usage: "thighs" },
-    { name: "uniform", description: "Military, Konbini, Work, Nurse Uniforms, etc!~ Sexy~", aliases: ["uni"], usage: "uniform" },
-    { name: "hentaigif", description: "Basically an animated image, so yes :3", aliases: ["hentaigifs"], usage: "hentaigif" }
+    { name: "hentai", description: "Random vanilla hentai images.", aliases: ["h"], usage: "{prefix}hentai" },
+    { name: "ass", description: "I know you like anime ass.", aliases: [], usage: "{prefix}ass" },
+    { name: "blowjob", description: "Basically an image of a girl sucking on a sharp blade!.", aliases: ["blow"], usage: "{prefix}blowjob" },
+    { name: "cum", description: "Basically sticky white stuff that is usually milked from sharpies.", aliases: [], usage: "{prefix}cum" },
+    { name: "panties", description: "I mean... just why? You like underwear?", aliases: ["pan"], usage: "{prefix}panties" },
+    { name: "pussy", description: "The genitals of a female, or a cat, you give the meaning.", aliases: ["pus"], usage: "{prefix}pussy" },
+    { name: "school", description: "School Uniforms!~ Yatta~!", aliases: ["sch"], usage: "{prefix}school" },
+    { name: "tentacles", description: "I'm sorry but, why do they look like intestines?", aliases: ["ten"], usage: "{prefix}tentacles" },
+    { name: "thighs", description: "The top part of your legs, very hot, isn't it?", aliases: ["thi"], usage: "{prefix}thighs" },
+    { name: "uniform", description: "Military, Konbini, Work, Nurse Uniforms, etc!~ Sexy~", aliases: ["uni"], usage: "{prefix}uniform" },
+    { name: "hentaigif", description: "Basically an animated image, so yes :3", aliases: ["hentaigifs"], usage: "{prefix}hentaigif" }
   ];
 
   for (const hentaiCommand of hentaiCommands) {
@@ -47,7 +47,7 @@ export default new Event("ready", async () => {
       description: hentaiCommand.description,
       aliases: hentaiCommand.aliases,
       category: "Hentai",
-      usage: hentaiCommand.name,
+      usage: hentaiCommand.usage,
       onlyChannels: ["hentai"],
       run: async (client, message, args) => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
@@ -80,9 +80,9 @@ export default new Event("ready", async () => {
   }
 
   const animeCommands: { name: string;description: string;aliases: string[];usage: string } [] = [
-    { name: "wallpaper", description: "Cool anime wallpapers.", aliases: ["wallpapers", "wal"], usage: "wallpaper" },
-    { name: "meme", description: "Funny and wholesome Anime memes.", aliases: ["memes"], usage: "meme" },
-    { name: "art", description: "Amazing anime arts.", aliases: ["arts"], usage: "art" },
+    { name: "wallpaper", description: "Cool anime wallpapers.", aliases: ["wallpapers", "wal"], usage: "{prefix}wallpaper" },
+    { name: "meme", description: "Funny and wholesome Anime memes.", aliases: ["memes"], usage: "{prefix}meme" },
+    { name: "art", description: "Amazing anime arts.", aliases: ["arts"], usage: "{prefix}art" },
   ];
 
   for (const animeCommand of animeCommands) {
@@ -91,7 +91,7 @@ export default new Event("ready", async () => {
       description: animeCommand.description,
       aliases: animeCommand.aliases,
       category: "Anime",
-      usage: animeCommand.name,
+      usage: animeCommand.usage,
       onlyChannels: ["anime"],
       run: async (client, message, args) => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
