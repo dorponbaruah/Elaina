@@ -10,7 +10,7 @@ export default new ElainaPrefixCommand({
   usage: "{prefix}hindijoke",
   run: (client, message, args) => {
     
-    fetch("https://hindi-jokes-api.onrender.com/jokes?api_key=145413bd1a0c9d10cc933bf3dced")
+    fetch("https://hindi-jokes-api.onrender.com/jokes?api_key="+process.env.hindiJokeApiKey)
 
       .then(res => res.json())
 
