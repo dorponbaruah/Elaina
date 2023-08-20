@@ -12,7 +12,7 @@ export default new ElainaPrefixCommand({
   run: (client, message, args) => {
     if (args[0]) {
       const command = client.prefixCommands.get(args[0]);
-      
+
       if (!command) {
         return message.reply(
           new ElainaErrorMessage("The command you specified is either a **`slash command`** or is invalid.", {
@@ -20,26 +20,26 @@ export default new ElainaPrefixCommand({
           })
         );
       }
-      
+
       const embedFields = [{
         name: "Usage:",
         value: command.usage.replace("{prefix}", constants.Prefixes[1])
       }];
-      
+
       if (command.usage.includes("[") || command.usage.includes("<")) {
         embedFields.push({
           name: "Remove brackets when typing commands",
           value: "```[] = optional arguments\n<> = required arguments```"
         });
       }
-      
+
       if (command.examples?.length) {
         embedFields.push({
           name: "Example(s):",
           value: command.examples.join("\n").replace("{prefix}", constants.Prefixes[1])
         });
       }
-      
+
       return message.reply({
         embeds: [
           new MessageEmbed()
@@ -50,38 +50,44 @@ export default new ElainaPrefixCommand({
         ]
       });
     }
-    
-    const commands: { [key: string]: string[] } = {
+
+    const commands: {
+      [key: string]: string[] } = {
       info: [],
       serverSettings: [],
       fun: [],
       anime: [],
+      waifu: [],
       hentai: []
     }
-    
+
     client.prefixCommands.forEach(command => {
       switch (command.category) {
         case 'Info':
           commands.info.push(command.name);
           break;
-        
+
         case 'Server Settings':
           commands.serverSettings.push(command.name);
           break;
-        
+
         case 'Fun':
           commands.fun.push(command.name);
           break;
-        
+
         case 'Anime':
           commands.anime.push(command.name);
           break;
-        
+
+        case 'Waifu':
+          commands.waifu.push(command.name);
+          break;
+
         case 'Hentai':
           commands.hentai.push(command.name);
       }
     });
-    
+
     client.slashCommands.forEach(command => {
       switch (command.category) {
         case 'Info':
@@ -92,7 +98,7 @@ export default new ElainaPrefixCommand({
             commands.info.push(`[/]${command.name}`);
           }
           break;
-    
+
         case 'Server Settings':
           if (command.subcommands) {
             commands.serverSettings.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
@@ -101,7 +107,7 @@ export default new ElainaPrefixCommand({
             commands.serverSettings.push(`[/]${command.name}`);
           }
           break;
-    
+
         case 'Fun':
           if (command.subcommands) {
             commands.fun.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
@@ -110,7 +116,7 @@ export default new ElainaPrefixCommand({
             commands.fun.push(`[/]${command.name}`);
           }
           break;
-    
+
         case 'Anime':
           if (command.subcommands) {
             commands.anime.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
@@ -119,7 +125,16 @@ export default new ElainaPrefixCommand({
             commands.anime.push(`[/]${command.name}`);
           }
           break;
-    
+
+        case 'Waifu':
+          if (command.subcommands) {
+            commands.waifu.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
+          }
+          else {
+            commands.waifu.push(`[/]${command.name}`);
+          }
+          break;
+
         case 'Hentai':
           if (command.subcommands) {
             commands.hentai.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
@@ -129,13 +144,13 @@ export default new ElainaPrefixCommand({
           }
       }
     });
-    
+
     const helpEmbed = new MessageEmbed()
       .setColor(constants.Colors.MAIN_EMBED_COLOR)
       .setAuthor({ name: "Help Command", iconURL: message.member.displayAvatarURL({ dynamic: true }) })
       .setDescription(`Hello I'm **${client.user?.username}**, a discord bot designed to serve the <@&891974559610318878> of ${message.guild.name}.\n\nMy prefixes are '\`e!\`' and '\`e\`', however mentioning (@) me always works.`)
       .setImage("https://media.discordapp.net/attachments/926846660322160700/1118218083681697812/chrome_screenshot_1686674319357.png")
-    
+
     const commandListEmbed = new MessageEmbed()
       .setDescription(`Here is the list of my commands!\n\nUse ${constants.Prefixes[1]}help \`[command name]\` to get info on a specific command. (Doesn't work for \`[/]\`slash commands)`)
       .setColor(constants.Colors.MAIN_EMBED_COLOR)
@@ -153,15 +168,19 @@ export default new ElainaPrefixCommand({
           value: `\`${commands.fun.join("`, `")}\``
         },
         {
-          name: `🌸 Anime`,
+          name: `💖 Anime`,
           value: `\`${commands.anime.join("`, `")}\``
+        },
+        {
+          name: `🌸 Waifu`,
+          value: `\`${commands.waifu.join("`, `")}\``
         },
         {
           name: `💀 Hentai`,
           value: `||\`${commands.hentai.join("`, `")}\`||`
         }
       ]);
-      
+
     message.reply({ embeds: [helpEmbed, commandListEmbed] });
   }
 });

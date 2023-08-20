@@ -5,6 +5,7 @@ declare global {
       developerId: string;
       guildsIds: string;
       hindiJokeApiKey: string;
+      waifuApiKey: string;
     }
   }
 }

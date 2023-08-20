@@ -2,6 +2,7 @@ import bot, { Event, constants, ElainaPrefixCommand, typings } from "../index";
 import { Guild, MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
 import akaneko from "akaneko";
 import { randomImageFromSub } from "justreddit";
+import fetch from "node-fetch";
 
 export default new Event("ready", async () => {
   console.log(
@@ -9,7 +10,7 @@ export default new Event("ready", async () => {
   );
 
   await bot.user?.setPresence(constants.ElainaPresenceData);
-  
+
   const pinAndSendDmButtons = new MessageActionRow()
     .addComponents(
       new MessageButton()
@@ -17,14 +18,14 @@ export default new Event("ready", async () => {
       .setLabel("Pin")
       .setEmoji("📌")
       .setCustomId("PIN_THE_MESSAGE_MAN"),
-  
+
       new MessageButton()
       .setStyle("PRIMARY")
       .setLabel("Save in DM")
       .setEmoji("✉️")
       .setCustomId("SEND_IN_MY_DMS")
     );
-  
+
   // hentai commands
   const hentaiCommands: { name: string;description: string;aliases: string[];usage: string } [] = [
     { name: "hentai", description: "Random vanilla hentai images.", aliases: ["h"], usage: "hentai" },
@@ -76,14 +77,12 @@ export default new Event("ready", async () => {
     wallpaper: ["animewallpaper", "animewallpaper", "animewallpaperssfw"],
     meme: ["animemes", "animememe", "goodanimememes", "wholesomeanimemes"],
     art: ["awwnime", "animeart", "animesketch"],
-    waifu: ["waifudiffusion"]
   }
 
   const animeCommands: { name: string;description: string;aliases: string[];usage: string } [] = [
     { name: "wallpaper", description: "Cool anime wallpapers.", aliases: ["wallpapers", "wal"], usage: "wallpaper" },
     { name: "meme", description: "Funny and wholesome Anime memes.", aliases: ["memes"], usage: "meme" },
     { name: "art", description: "Amazing anime arts.", aliases: ["arts"], usage: "art" },
-    { name: "waifu", description: "Anime waifus~ UWU~", aliases: ["waifu"], usage: "waifu" }
   ];
 
   for (const animeCommand of animeCommands) {
@@ -118,5 +117,58 @@ export default new Event("ready", async () => {
     });
 
     bot.prefixCommands.set(animeCommand.name, command as typings.ElainaPrefixCommand);
+  }
+
+  const waifuCommands: { name: string;description: string;aliases: string[];usage: string } [] = [
+    { name: "waifu", description: "Anime waifus~ UWU~", aliases: ["wai"], usage: "{prefix}waifu" },
+    { name: "maid", description: "Maid anime girls~ UWU~", aliases: [], usage: "{prefix}maid" },
+    { name: "marin-kitagawa", description: "Marin Kitagawa is the main female protagonist of the anime and manga series My Dress-Up Darling.", aliases: ["marin", "kitagawa", "m-k"], usage: "{prefix}marin-kitagawa" },
+    { name: "raiden-shogun", description: "Raiden Shogun is a playable character in Genshin Impact.", aliases: ["raiden", "shogun", "r-s"], usage: "{prefix}raiden-shogun" },
+    { name: "selfies", description: "Anime girl selfies~ UWU~", aliases: ["sel"], usage: "" },
+    { name: "uniform", description: "Anime girl in School Uniform~ UWU~", aliases: ["uni"], usage: "{prefix}uniform" },
+  ];
+
+  for (const waifuCommand of waifuCommands) {
+    const command = new ElainaPrefixCommand({
+      name: waifuCommand.name,
+      description: waifuCommand.description,
+      aliases: waifuCommand.aliases,
+      category: "Waifu",
+      usage: waifuCommand.usage,
+      onlyChannels: ["waifu"],
+      run: async (client, message, args) => {
+        const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
+
+        const urlSearchParams = new URLSearchParams({
+          Authorization: "Bearer "+process.env.waifuApiKey,
+          included_tags: waifuCommand.name,
+        });
+
+        fetch(`https://api.waifu.im/search?${urlSearchParams}`)
+
+          .then(res => res.json())
+
+          .then(data => {
+            reply.edit({
+              content: null,
+              embeds: [
+                new MessageEmbed()
+                  .setImage(data.images[0].url)
+                  .setDescription(data.images[0].tags[0].description)
+                  .setColor(constants.Colors.MAIN_EMBED_COLOR)
+              ],
+              components: [pinAndSendDmButtons]
+            });
+          })
+
+          .catch(error => {
+            reply.edit(`Failed to fetch an image of \`${waifuCommand.name}\``);
+            console.log(error.name + " " + error.message + " | CommandName: " + waifuCommand.name);
+          });
+
+      }
+    });
+
+    bot.prefixCommands.set(waifuCommand.name, command as typings.ElainaPrefixCommand);
   }
 });
