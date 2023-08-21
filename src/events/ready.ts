@@ -135,7 +135,7 @@ export default new Event("ready", async () => {
       aliases: waifuCommand.aliases,
       category: "Waifu",
       usage: waifuCommand.usage,
-      onlyChannels: ["waifu"],
+      onlyChannels: ["waifus"],
       run: async (client, message, args) => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
 
