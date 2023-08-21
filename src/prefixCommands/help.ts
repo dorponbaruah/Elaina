@@ -163,38 +163,38 @@ export default new ElainaPrefixCommand({
       .setColor(constants.Colors.MAIN_EMBED_COLOR)
       .setAuthor({ name: "Help Command", iconURL: message.member.displayAvatarURL({ dynamic: true }) })
       .setDescription(`Hello I'm **${client.user?.username}**, a discord bot designed to serve the <@&891974559610318878> of ${message.guild.name}.\n\nMy prefixes are '\`e!\`' and '\`e\`', however mentioning (@) me always works.`)
-      .setImage("https://media.discordapp.net/attachments/926846660322160700/1118218083681697812/chrome_screenshot_1686674319357.png")
+      .setImage("https://media.discordapp.net/attachments/926846660322160700/1143037522717454366/Picsart_23-08-21_09-41-08-668.jpg")
 
     const commandListEmbed = new MessageEmbed()
-      .setDescription(`Here is the list of my commands!\n\nUse ${constants.Prefixes[1]}help \`[command name]\` to get info on a specific command. (Doesn't work for \`[/]\`slash commands)`)
+      .setDescription(`Here is the list of my commands!\n\n**Use ${constants.Prefixes[1]}help \`[command name]\` to get info on a specific command. (Doesn't work for \`[/]\`slash commands)**`)
       .setColor(constants.Colors.MAIN_EMBED_COLOR)
       .addFields([
         {
-          name: `${constants.Emojis.INFO} Info`,
+          name: `${constants.Emojis.INFO} Info (${commands.info.length})`,
           value: `\`${commands.info.join("`, `")}\``
         },
         {
-          name: `⚙️ Server Settings`,
+          name: `⚙️ Server Settings (${commands.serverSettings.length})`,
           value: `\`${commands.serverSettings.join("`, `")}\``
         },
         {
-          name: `🧩 Fun`,
+          name: `🧩 Fun (${commands.fun.length})`,
           value: `\`${commands.fun.join("`, `")}\``
         },
         {
-          name: `🐼 Animal`,
+          name: `🐼 Animal (${commands.animal.length})`,
           value: `\`${commands.animal.join("`, `")}\``
         },
         {
-          name: `🌸 Waifu`,
+          name: `🌸 Waifu (${commands.waifu.length})`,
           value: `\`${commands.waifu.join("`, `")}\``
         },
         {
-          name: `💖 Anime`,
+          name: `💖 Anime (${commands.anime.length})`,
           value: `\`${commands.anime.join("`, `")}\``
         },
         {
-          name: `🔞 Hentai`,
+          name: `🔞 ||Hentai (${commands.hentai.length})||`,
           value: `||\`${commands.hentai.join("`, `")}\`||`
         }
       ]);
