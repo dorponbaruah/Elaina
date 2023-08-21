@@ -135,12 +135,12 @@ export default new Event("ready", async () => {
       aliases: waifuCommand.aliases,
       category: "Waifu",
       usage: waifuCommand.usage,
-      onlyChannels: ["waifus"],
+      onlyChannels: ["waifus", "waifu"],
       run: async (client, message, args) => {
         const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good post...**`);
 
         const urlSearchParams = new URLSearchParams({
-          Authorization: "Bearer "+process.env.waifuApiKey,
+          Authorization: "Bearer " + process.env.waifuApiKey,
           included_tags: waifuCommand.name,
         });
 
@@ -164,10 +164,66 @@ export default new Event("ready", async () => {
             reply.edit(`Failed to fetch an image of \`${waifuCommand.name}\``);
             console.log(error.name + " " + error.message + " | CommandName: " + waifuCommand.name);
           });
-
       }
     });
 
     bot.prefixCommands.set(waifuCommand.name, command as typings.ElainaPrefixCommand);
+  }
+
+  const animalCommands: { name: string;description: string;aliases: string[];usage: string } [] = [
+    { name: "dog", description: "Sends an image of a dog.", aliases: ["dogs", "kutta"], usage: "{prefix}dog" },
+    { name: "cat", description: "Sends an image of a cat.", aliases: ["cats", "billi", "billa"], usage: "{prefix}cat" },
+    { name: "bird", description: "Sends an image of a bird", aliases: ["chidiya", "birds", "birdy"], usage: "{prefix}bird" },
+    { name: "panda", description: "Sends an image of a panda.", aliases: ["pandas", "pamda"], usage: "{prefix}panda" },
+    { name: "redpanda", description: "Sends an image of a redpanda.", aliases: ["redpa", "redpamda", "redpandas"], usage: "{prefix}redpanda" },
+    { name: "koala", description: "Sends an image of a koala.", aliases: ["koa", "koalas"], usage: "{prefix}koala" },
+    { name: "fox", description: "Sends an image of a fox.", aliases: ["foxes"], usage: "{prefix}fox" },
+    { name: "whale", description: "Sends an image of a whale.", aliases: ["whales", "wh"], usage: "{prefix}whale" },
+    { name: "dolphin", description: "Sends an image of a dolphin.", aliases: ["dolphins", "dolp"], usage: "{prefix}dolphin" },
+    { name: "kangaroo", description: "Sends an image of a kangaroo.", aliases: ["kan", "kangaroos"], usage: "{prefix}kangaroo" },
+    { name: "bunny", description: "Sends an image of a bunny.", aliases: ["bun", "bunnies"], usage: "{prefix}bunny" },
+    { name: "bear", description: "Sends an image of a bear.", aliases: ["bears"], usage: "{prefix}bear" },
+    { name: "lion", description: "Sends an image of a lion.", aliases: ["lions"], usage: "{prefix}lion" },
+    { name: "frog", description: "Sends an image of a frog.", aliases: ["frogs"], usage: "{prefix}frog" },
+    { name: "duck", description: "Sends an image of a duck.", aliases: ["ducks"], usage: "{prefix}duck" },
+    { name: "penguin", description: "Sends an image of a penguin.", aliases: ["peng", "penguins"], usage: "{prefix}penguin" },
+    { name: "axolotl", description: "Sends an image of a axolotl.", aliases: ["axol", "axolotls"], usage: "{prefix}axolotl" }
+  ];
+
+  for (const animalCommand of animalCommands) {
+    const command = new ElainaPrefixCommand({
+      name: animalCommand.name,
+      description: animalCommand.description,
+      aliases: animalCommand.aliases,
+      category: "Animal",
+      usage: animalCommand.usage,
+      onlyChannels: ["animal", "animals"],
+      run: async (client, message, args) => {
+        const reply = await message.reply(`${constants.Emojis.LOADING} **Finding a good image...**`);
+
+        fetch("https://api.animality.xyz/img/"+animalCommand.name)
+
+          .then(res => res.json())
+
+          .then(data => {
+            reply.edit({
+              content: null,
+              embeds: [
+                new MessageEmbed()
+                  .setImage(data.link)
+                  .setColor(constants.Colors.MAIN_EMBED_COLOR)
+              ],
+              components: [pinAndSendDmButtons]
+            });
+          })
+
+          .catch(error => {
+            reply.edit(`Failed to fetch an image of \`${animalCommand.name}\``);
+            console.log(error.name + " " + error.message + " | CommandName: " + animalCommand.name);
+          });
+      }
+    });
+
+    bot.prefixCommands.set(animalCommand.name, command as typings.ElainaPrefixCommand);
   }
 });

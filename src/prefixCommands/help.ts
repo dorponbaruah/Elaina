@@ -6,7 +6,7 @@ export default new ElainaPrefixCommand({
   description: "Get the list of my commands or more info on a specific prefix command.",
   aliases: ["commands", "cmds"],
   category: "Info",
-  onlyChannels: ["commands", "fun-bots", "hentai", "anime", "waifu"],
+  onlyChannels: ["commands", "fun-bots", "hentai", "anime", "waifu", "waifus", "animal", "animals"],
   usage: "{prefix}help `[command name]`",
   examples: ["{prefix}help", "{prefix}help tictactoe"],
   run: (client, message, args) => {
@@ -56,9 +56,10 @@ export default new ElainaPrefixCommand({
       info: [],
       serverSettings: [],
       fun: [],
-      anime: [],
+      animal: [],
+      hentai: [],
       waifu: [],
-      hentai: []
+      anime: []
     }
 
     client.prefixCommands.forEach(command => {
@@ -85,6 +86,10 @@ export default new ElainaPrefixCommand({
 
         case 'Hentai':
           commands.hentai.push(command.name);
+          break;
+        
+        case 'Animal':
+          commands.animal.push(command.name);
       }
     });
 
@@ -142,6 +147,15 @@ export default new ElainaPrefixCommand({
           else {
             commands.hentai.push(`[/]${command.name}`);
           }
+          break;
+        
+        case 'Animal':
+          if (command.subcommands) {
+            commands.animal.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
+          }
+          else {
+            commands.animal.push(`[/]${command.name}`);
+          }
       }
     });
 
@@ -168,15 +182,19 @@ export default new ElainaPrefixCommand({
           value: `\`${commands.fun.join("`, `")}\``
         },
         {
-          name: `💖 Anime`,
-          value: `\`${commands.anime.join("`, `")}\``
+          name: `🐼 Animal`,
+          value: `\`${commands.animal.join("`, `")}\``
         },
         {
           name: `🌸 Waifu`,
           value: `\`${commands.waifu.join("`, `")}\``
         },
         {
-          name: `💀 Hentai`,
+          name: `💖 Anime`,
+          value: `\`${commands.anime.join("`, `")}\``
+        },
+        {
+          name: `🔞 Hentai`,
           value: `||\`${commands.hentai.join("`, `")}\`||`
         }
       ]);
