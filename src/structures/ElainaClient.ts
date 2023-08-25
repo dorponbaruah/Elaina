@@ -6,6 +6,7 @@ import glob from "glob";
 export class ElainaClient extends Client<true> {
   public prefixCommands: Collection<string, typings.ElainaPrefixCommand> = new Collection();
   public slashCommands: Collection<string, typings.ElainaSlashCommand> = new Collection();
+  public timeoutIds: Collection<Snowflake, NodeJS.Timeout> = new Collection();
   
   public start() {
     this.login(process.env.botToken);

@@ -147,7 +147,10 @@ export default new ElainaSlashCommand({
     }
   ],
   
-  subcommands: ["button role", "button custom_function"],
+  subcommands: [ 
+    { name: "button role", description: "Adds a buttonrole to a message." },
+    { name: "button custom_function", description: "Adds a button to a message that will call a custom function." }
+  ],
   
   category: "Server Settings",
   

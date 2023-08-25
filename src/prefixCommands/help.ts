@@ -1,15 +1,16 @@
-import { ElainaPrefixCommand, ElainaErrorMessage, constants } from "../index";
-import { MessageEmbed } from "discord.js";
+import bot, { ElainaPrefixCommand, ElainaErrorMessage, constants } from "../index";
+import { MessageEmbed, Interaction, SelectMenuInteraction } from "discord.js";
+import getHelpTemplates from "../templates/help";
 
 export default new ElainaPrefixCommand({
   name: "help",
-  description: "Get the list of my commands or more info on a specific prefix command.",
+  description: "Get instant guidance on my commands.",
   aliases: ["commands", "cmds"],
   category: "Info",
   onlyChannels: ["commands", "fun-bots", "hentai", "anime", "waifu", "waifus", "animal", "animals"],
   usage: "{prefix}help `[command name]`",
   examples: ["{prefix}help", "{prefix}help tictactoe"],
-  run: (client, message, args) => {
+  run: async (client, message, args) => {
     if (args[0]) {
       const command = client.prefixCommands.get(args[0]);
 
@@ -50,155 +51,68 @@ export default new ElainaPrefixCommand({
         ]
       });
     }
+    
+    const row = getHelpTemplates("categorySelectionMenu");
 
-    const commands: {
-      [key: string]: string[] } = {
-      info: [],
-      serverSettings: [],
-      fun: [],
-      animal: [],
-      hentai: [],
-      waifu: [],
-      anime: []
-    }
-
-    client.prefixCommands.forEach(command => {
-      switch (command.category) {
-        case 'Info':
-          commands.info.push(command.name);
-          break;
-
-        case 'Server Settings':
-          commands.serverSettings.push(command.name);
-          break;
-
-        case 'Fun':
-          commands.fun.push(command.name);
-          break;
-
-        case 'Anime':
-          commands.anime.push(command.name);
-          break;
-
-        case 'Waifu':
-          commands.waifu.push(command.name);
-          break;
-
-        case 'Hentai':
-          commands.hentai.push(command.name);
-          break;
-        
-        case 'Animal':
-          commands.animal.push(command.name);
-      }
+    const msg = await message.reply({ 
+      embeds: [getHelpTemplates("getStartedEmbed", message)],
+      components: [row]
     });
-
-    client.slashCommands.forEach(command => {
-      switch (command.category) {
-        case 'Info':
-          if (command.subcommands) {
-            commands.info.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
-          }
-          else {
-            commands.info.push(`[/]${command.name}`);
-          }
-          break;
-
-        case 'Server Settings':
-          if (command.subcommands) {
-            commands.serverSettings.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
-          }
-          else {
-            commands.serverSettings.push(`[/]${command.name}`);
-          }
-          break;
-
-        case 'Fun':
-          if (command.subcommands) {
-            commands.fun.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
-          }
-          else {
-            commands.fun.push(`[/]${command.name}`);
-          }
-          break;
-
-        case 'Anime':
-          if (command.subcommands) {
-            commands.anime.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
-          }
-          else {
-            commands.anime.push(`[/]${command.name}`);
-          }
-          break;
-
-        case 'Waifu':
-          if (command.subcommands) {
-            commands.waifu.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
-          }
-          else {
-            commands.waifu.push(`[/]${command.name}`);
-          }
-          break;
-
-        case 'Hentai':
-          if (command.subcommands) {
-            commands.hentai.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
-          }
-          else {
-            commands.hentai.push(`[/]${command.name}`);
-          }
-          break;
+    
+    const timeoutId = setTimeout(() => {
+      row.components[0].disabled = true;
+      
+      if (msg) msg.edit({ components: [row] });
+      
+      client.timeoutIds.delete(msg.id);
+    }, 24000);
+    
+    client.timeoutIds.set(msg.id, timeoutId);
+  },
+  
+  eventListener: {
+    event: "interactionCreate",
+    run: async (interaction: Interaction) => {
+      if (!interaction.inCachedGuild()) return;
+      if (interaction.isSelectMenu() && (interaction as SelectMenuInteraction).customId === "COMMAND_CATEGORY_SELECTOR_IN_HELP_COMMAND") {
+        await clearTimeout(bot.timeoutIds.get(interaction.message.id));
+      
+        bot.timeoutIds.delete(interaction.message.id);
+      
+        const selectedCategory = interaction.values[0].split("||")[1].toLowerCase();
         
-        case 'Animal':
-          if (command.subcommands) {
-            commands.animal.push(...command.subcommands.map(cmdName => `[/]${cmdName}`));
-          }
-          else {
-            commands.animal.push(`[/]${command.name}`);
-          }
-      }
-    });
-
-    const helpEmbed = new MessageEmbed()
-      .setColor(constants.Colors.MAIN_EMBED_COLOR)
-      .setAuthor({ name: "Help Command", iconURL: message.member.displayAvatarURL({ dynamic: true }) })
-      .setDescription(`Hello I'm **${client.user?.username}**, a discord bot designed to serve the <@&891974559610318878> of ${message.guild.name}.\n\nMy prefixes are '\`e!\`' and '\`e\`', however mentioning (@) me always works.`)
-      .setImage("https://media.discordapp.net/attachments/926846660322160700/1143037522717454366/Picsart_23-08-21_09-41-08-668.jpg")
-
-    const commandListEmbed = new MessageEmbed()
-      .setDescription(`Here is the list of my commands!\n\n**Use ${constants.Prefixes[1]}help \`[command name]\` to get info on a specific command. (Doesn't work for \`[/]\`slash commands)**`)
-      .setColor(constants.Colors.MAIN_EMBED_COLOR)
-      .addFields([
-        {
-          name: `${constants.Emojis.INFO} Info (${commands.info.length})`,
-          value: `\`${commands.info.join("`, `")}\``
-        },
-        {
-          name: `⚙️ Server Settings (${commands.serverSettings.length})`,
-          value: `\`${commands.serverSettings.join("`, `")}\``
-        },
-        {
-          name: `🧩 Fun (${commands.fun.length})`,
-          value: `\`${commands.fun.join("`, `")}\``
-        },
-        {
-          name: `🐼 Animal (${commands.animal.length})`,
-          value: `\`${commands.animal.join("`, `")}\``
-        },
-        {
-          name: `🌸 Waifu (${commands.waifu.length})`,
-          value: `\`${commands.waifu.join("`, `")}\``
-        },
-        {
-          name: `💖 Anime (${commands.anime.length})`,
-          value: `\`${commands.anime.join("`, `")}\``
-        },
-        {
-          name: `🔞 ||Hentai (${commands.hentai.length})||`,
-          value: `||\`${commands.hentai.join("`, `")}\`||`
+        let embeds: MessageEmbed[];
+        
+        if (selectedCategory === "getstarted") {
+          embeds = [getHelpTemplates("getStartedEmbed", interaction)]
         }
-      ]);
-
-    message.reply({ embeds: [helpEmbed, commandListEmbed] });
+        else if (selectedCategory === "allcommands") {
+          embeds = [getHelpTemplates("allCommandsEmbed")]
+        }
+        else {
+          embeds = [getHelpTemplates("commandsListEmbeds")[selectedCategory]];
+        }
+        
+        const row = getHelpTemplates("categorySelectionMenu");
+        
+        const msg = await interaction.update({
+          embeds,
+          components: [row],
+          fetchReply: true
+        });
+        
+        const timeoutId = setTimeout(async () => {
+          row.components[0].disabled = true;
+        
+          if (msg) msg.edit({ components: [row] });
+            
+          bot.timeoutIds.delete(msg.id);
+          
+          console.log(bot.timeoutIds.keys());
+        }, 24000);
+        
+        bot.timeoutIds.set(msg.id, timeoutId);
+      }
+    }
   }
 });

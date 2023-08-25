@@ -19,7 +19,15 @@ export const Emojis = {
   CIRCLE: "<:tictactoe_o:1021142952933855264>",
   CROSS: "<:tictactoe_x:1021142994319056987>",
   EMPTY: "<:empty:1114611929328123984>",
-  TADA: "<:tada:1021201711177666650>"
+  TADA: "<:tada:1021201711177666650>",
+  SETTINGS: "<:settings:913057636654653470>",
+  GAMEDEV: "<:gamedev:914817945903955968>",
+  PANDADUCK: "<:pandaduck:1144222231417847838>",
+  WAIFU: "<:waifu:1144222541746020364>",
+  ANIMELOVE: "<:animelove:1144223078872784916>",
+  CATEGORIES: "<:categories:913059914912501800>", 
+  WARNING: "<:warning:1144223978752311378>",
+  COMMANDSLIST: "<:CommandsList:1144246332886876223>"
 } as const;
 
 export const ElainaPresenceData = {
