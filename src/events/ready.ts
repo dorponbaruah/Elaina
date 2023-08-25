@@ -30,7 +30,7 @@ export default new Event("ready", async () => {
   const hentaiCommands: { name: string;description: string;aliases: string[];usage: string } [] = [
     { name: "hentai", description: "Random vanilla hentai images.", aliases: ["h"], usage: "{prefix}hentai" },
     { name: "ass", description: "I know you like anime ass.", aliases: [], usage: "{prefix}ass" },
-    { name: "blowjob", description: "Basically an image of a girl sucking on a sharp blade!.", aliases: ["blow"], usage: "{prefix}blowjob" },
+    { name: "blowjob", description: "Basically an image of a girl sucking on a sharp blade!", aliases: ["blow"], usage: "{prefix}blowjob" },
     { name: "cum", description: "Basically sticky white stuff that is usually milked from sharpies.", aliases: [], usage: "{prefix}cum" },
     { name: "panties", description: "I mean... just why? You like underwear?", aliases: ["pan"], usage: "{prefix}panties" },
     { name: "pussy", description: "The genitals of a female, or a cat, you give the meaning.", aliases: ["pus"], usage: "{prefix}pussy" },
