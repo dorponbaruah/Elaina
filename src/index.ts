@@ -9,9 +9,8 @@ const client = new ElainaClient({
   intents: [
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MEMBERS,
-    Intents.FLAGS.GUILD_WEBHOOKS,
     Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.DIRECT_MESSAGES
+    Intents.FLAGS.MESSAGE_CONTENT,
   ]
 });
 
