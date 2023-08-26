@@ -22,5 +22,6 @@ export { Event } from "./structures/Event";
 export { ElainaPrefixCommand, ElainaSlashCommand } from "./structures/ElainaCommands";
 export { ElainaErrorMessage } from "./structures/ElainaErrorMessage";
 export { ElainaWebhook } from "./structures/ElainaWebhook";
+export { ErrorEvent } from "./structures/ErrorEvent";
 
 client.start();

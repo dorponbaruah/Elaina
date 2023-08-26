@@ -73,5 +73,16 @@ export class ElainaClient extends Client<true> {
       
       this.on(event.event, event.run);
     }
+    
+    // Error Events
+    const errEventFiles = await globPromise(
+      `${__dirname}/../events/../*{.ts,.js}`
+    );
+    
+    for (const filePath of eventFiles) {
+      const event = await importFile(filePath);
+      
+      process.on(event.event, event.run);
+    }
   }
 }
