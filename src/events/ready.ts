@@ -187,7 +187,8 @@ export default new Event("ready", async () => {
     { name: "frog", description: "Sends an image of a frog.", aliases: ["frogs"], usage: "{prefix}frog" },
     { name: "duck", description: "Sends an image of a duck.", aliases: ["ducks"], usage: "{prefix}duck" },
     { name: "penguin", description: "Sends an image of a penguin.", aliases: ["peng", "penguins"], usage: "{prefix}penguin" },
-    { name: "axolotl", description: "Sends an image of a axolotl.", aliases: ["axol", "axolotls"], usage: "{prefix}axolotl" }
+    { name: "axolotl", description: "Sends an image of a axolotl.", aliases: ["axol", "axolotls"], usage: "{prefix}axolotl" },
+    { name: "capybara", description: "Sends an image of a capybara.", aliases: ["capy", "capybaras"], usage: "{prefix}capybara" }
   ];
 
   for (const animalCommand of animalCommands) {
