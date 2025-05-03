@@ -6,4 +6,4 @@ A personal Discord bot with a mix of fun and useful commands — built by Dorpon
 
 Discord username: @dorpon
 
-Discord: https://discord.gg/EdqT42Vt
+Discord: https://discord.gg/PPaWPhq7MA
