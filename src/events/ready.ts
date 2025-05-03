@@ -1,7 +1,6 @@
 import bot, { Event, constants, ElainaPrefixCommand, typings } from "../index";
 import { Guild, MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
 import HMtai from "hmtai";
-import { randomImageFromSub } from "justreddit";
 import fetch from "node-fetch";
 
 export default new Event("ready", async () => {
