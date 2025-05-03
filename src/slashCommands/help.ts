@@ -22,7 +22,7 @@ export default new ElainaSlashCommand({
       if (msg) msg.edit({ components: [row] });
       
       client.timeoutIds.delete(msg.id);
-    }, 24000);
+    }, 60000);
     
     client.timeoutIds.set(msg.id, timeoutId);
   }
