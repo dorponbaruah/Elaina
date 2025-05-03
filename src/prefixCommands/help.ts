@@ -65,7 +65,7 @@ export default new ElainaPrefixCommand({
       if (msg) msg.edit({ components: [row] });
       
       client.timeoutIds.delete(msg.id);
-    }, 24000);
+    }, 60000);
     
     client.timeoutIds.set(msg.id, timeoutId);
   },
