@@ -32,8 +32,8 @@ export default new Event("interactionCreate", async (interaction) => {
     if (command.onlyChannels) {
       if (
         !command.onlyChannels.includes(interaction.channel.name) &&
-        interaction.channel.name !== "chaos" &&
-        interaction.channel.name !== "bot-setup"
+        !interaction.channel.name.includes("chaos") &&
+        !interaction.channel.name.includes("bot-setup")
       ) {
         const channels: Snowflake[] = [];
         
