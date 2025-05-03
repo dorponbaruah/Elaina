@@ -4,8 +4,6 @@ declare global {
       botToken: string;
       developerId: string;
       guildsIds: string;
-      hindiJokeApiKey: string;
-      waifuApiKey: string;
     }
   }
 }
