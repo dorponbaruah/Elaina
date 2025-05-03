@@ -3,16 +3,19 @@ import { Client, Collection, Intents, ApplicationCommandDataResolvable, ClientEv
 import { promisify } from "util";
 import glob from "glob";
 
-export class ElainaClient extends Client<true> {
-  public prefixCommands: Collection<string, typings.ElainaPrefixCommand> = new Collection();
-  public slashCommands: Collection<string, typings.ElainaSlashCommand> = new Collection();
-  public timeoutIds: Collection<Snowflake, NodeJS.Timeout> = new Collection();
+export class ElainaClient extends Client < true > {
+  public prefixCommands: Collection < string,
+  typings.ElainaPrefixCommand > = new Collection();
+  public slashCommands: Collection < string,
+  typings.ElainaSlashCommand > = new Collection();
+  public timeoutIds: Collection < Snowflake,
+  NodeJS.Timeout > = new Collection();
   
   public start() {
     this.login(process.env.botToken);
     this.registerModules();
   }
-
+  
   public async registerModules() {
     const globPromise = promisify(glob);
     
@@ -28,7 +31,7 @@ export class ElainaClient extends Client<true> {
     for (const filepath of prefixCommandFiles) {
       const command: typings.ElainaPrefixCommand = await importFile(filepath);
       if (!command.name) return;
-   
+      
       if (command.eventListener) {
         this.on(command.eventListener.event, command.eventListener.run);
       }
@@ -58,8 +61,22 @@ export class ElainaClient extends Client<true> {
       const guildIds: Snowflake[] = Array.from(this.guilds.cache.keys());
       
       for (const guildId of guildIds) {
-        await this.guilds.cache.get(guildId)!
-          .commands.set(arrayOfSlashCommands);
+        const guild = this.guilds.cache.get(guildId);
+        try {
+          await this.guilds.cache.get(guildId)!.commands.set(arrayOfSlashCommands);
+            console.log(`Registered slash commands for guild: ${guild.name}`);
+        } catch (error) {
+          console.error(`Failed to register commands for guild: ${guild.name}`, error);
+        }
+      }
+    });
+    
+    this.on("guildCreate", async (guild) => {
+      try {
+        await guild.commands.set(arrayOfSlashCommands);
+        console.log(`Registered slash commands for guild: ${guild.name}`);
+      } catch (error) {
+        console.error(`Failed to register commands for guild: ${guild.name}`, error);
       }
     });
     
@@ -69,7 +86,7 @@ export class ElainaClient extends Client<true> {
     );
     
     for (const filePath of eventFiles) {
-      const event: Event<keyof ClientEvents> = await importFile(filePath);
+      const event: Event < keyof ClientEvents > = await importFile(filePath);
       
       this.on(event.event, event.run);
     }
