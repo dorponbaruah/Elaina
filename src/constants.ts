@@ -41,5 +41,7 @@ export const ElainaPresenceData = {
 } as PresenceData;
 
 export const Colors = {
-  MAIN_EMBED_COLOR: "#ffffff"
+  MAIN_EMBED_COLOR: "#ffffff",
+  WARNING_EMBED_COLOR: "#ffa500",
+  ERROR_EMBED_COLOR: "#ff0000"
 } as const;
