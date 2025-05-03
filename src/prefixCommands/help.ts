@@ -109,7 +109,7 @@ export default new ElainaPrefixCommand({
           bot.timeoutIds.delete(msg.id);
           
           console.log(bot.timeoutIds.keys());
-        }, 24000);
+        }, 60000);
         
         bot.timeoutIds.set(msg.id, timeoutId);
       }

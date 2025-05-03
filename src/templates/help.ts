@@ -27,7 +27,7 @@ export default (embedOrRowToGet: string, message?: Message | typings.ExtendedCom
     const getStartedEmbed = new MessageEmbed()
       .setColor(constants.Colors.MAIN_EMBED_COLOR)
       .setAuthor({ name: "Help Command", iconURL: (message.member as GuildMember).displayAvatarURL({ dynamic: true }) })
-      .setDescription(`Hello I'm **${client.user?.username}**, a discord bot designed to serve the <@&891974559610318878> of ${message.guild.name}.\n\nMy prefixes are '\`e!\`' and '\`e\`', however mentioning (@) me always works.`)
+      .setDescription(`Hello I'm **${client.user?.username}**, a personal Discord bot with a mix of fun and useful commands — built by <@826899456909770763> for learning and experimentation.\n[click here for source code](https://github.com/dorponbaruah/Elaina).\n\nMy prefixes are '\`e!\`' and '\`e\`', however mentioning (@) me always works.`)
       .setImage("https://media.discordapp.net/attachments/926846660322160700/1143037522717454366/Picsart_23-08-21_09-41-08-668.jpg")
       .setFooter({ text: "Use the dropdown below to learn more about my commands.", iconURL: "https://media.discordapp.net/attachments/1015679157134426162/1144255523034767380/913059914912501800.png" })
     
