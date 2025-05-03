@@ -21,8 +21,8 @@ export default new Event("interactionCreate", async (interaction) => {
         if (interaction.user.id !== process.env.developerId) {
           return throwError("This command can only be used by the bot owner.");
         }
-      break;
-      
+        break;
+        
       case "SERVER_SETTINGS":
         if (!(interaction.member as GuildMember).permissions.has("MANAGE_GUILD")) {
           return throwError("This command can only be used by the server managers.");
@@ -36,15 +36,21 @@ export default new Event("interactionCreate", async (interaction) => {
         interaction.channel.name !== "bot-setup"
       ) {
         const channels: Snowflake[] = [];
-    
+        
         for await (const channelName of command.onlyChannels) {
-          const channel = client.guilds.cache
-            .get(JSON.parse((process.env.guildIds) as string)[1])!
-            .channels.cache.find(c => c.name === channelName);
-            
+          const guilds = JSON.parse((process.env.guildIds) as string);
+          const guild = client.guilds.cache.get(guilds[1]);
+          
+          if (!guild) {
+            console.error("Guild not found or not cached");
+            return throwError("Internal error: Guild not found.");
+          }
+          
+          const channel = guild.channels.cache.find(c => c.name === channelName);
+          
           if (channel) channels.push(channel.id);
         }
-    
+        
         return throwError(`Use this command in this/these channel(s)\n> <#${channels.join(">, <#")}>`);
       }
     }
@@ -60,9 +66,9 @@ export default new Event("interactionCreate", async (interaction) => {
         components: [
           new MessageActionRow().addComponents(
             new MessageButton()
-              .setStyle("PRIMARY")
-              .setLabel("Yes, I know what I'm doing.")
-              .setCustomId("e/br:2:962346685592403998")
+            .setStyle("PRIMARY")
+            .setLabel("Yes, I know what I'm doing.")
+            .setCustomId("e/br:2:962346685592403998")
           )
         ],
         ephemeral: true
@@ -74,18 +80,18 @@ export default new Event("interactionCreate", async (interaction) => {
     if (customId === "PIN_THE_MESSAGE_MAN") {
       try {
         await (message as Message).pin(`${member.user.username} pinned in ${channel.name}`);
-    
+        
         (message.components[0].components[0] as MessageButton)
-          .setLabel("Pinned")
+        .setLabel("Pinned")
           .setDisabled(true);
-    
+        
         interaction.update({
           components: message.components as MessageActionRow[]
         });
       }
       catch (error) {
         console.error(error);
-    
+        
         interaction.reply({ content: `Failed to pin the message.\n\n**Error message**:\n\`\`\`${error.message}\n\`\`\``, ephemeral: true });
       }
     }
@@ -93,12 +99,12 @@ export default new Event("interactionCreate", async (interaction) => {
     if (customId === "SEND_IN_MY_DMS") {
       try {
         await (member.user as User).send({ embeds: message.embeds });
-    
+        
         interaction.reply({ content: "Check your DMs!", ephemeral: true });
       }
       catch (error) {
         console.error(error);
-    
+        
         interaction.reply({ content: `Failed to send DM!\n\n**Error message**:\n\`\`\`${error.message}\n\`\`\``, ephemeral: true });
       }
     }
