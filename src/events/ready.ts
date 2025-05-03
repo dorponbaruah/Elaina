@@ -69,6 +69,7 @@ export default new Event("ready", async () => {
         hmtai.nsfw[hentaiCommand.name
             .replace("hentaigif", "gif")
             .replace("uwuniform", "uniform")
+            .replace("nsfwneko", "nsfwNeko")
             .replace("nsfwwallpaper", "nsfwMobileWallpaper")
           ]()
           .then((imageUrl: string) => {
