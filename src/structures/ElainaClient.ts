@@ -54,9 +54,9 @@ export class ElainaClient extends Client<true> {
       arrayOfSlashCommands.push(command);
     }
     
-    const guildIds: Snowflake[] = JSON.parse((process.env.guildIds) as string);
-    
     this.on("ready", async () => {
+      const guildIds: Snowflake[] = Array.from(this.guilds.cache.keys());
+      
       for (const guildId of guildIds) {
         await this.guilds.cache.get(guildId)!
           .commands.set(arrayOfSlashCommands);

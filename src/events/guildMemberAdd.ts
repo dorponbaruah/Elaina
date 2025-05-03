@@ -1,11 +1,9 @@
 import client, { Event } from "../index";
-import { MessageEmbed, Guild, GuildTextBasedChannel } from "discord.js";
+import { MessageEmbed, GuildTextBasedChannel } from "discord.js";
 
 export default new Event("guildMemberAdd", async (member) => {
-  const guildId: string = JSON.parse((process.env.guildIds) as string)[1];
-  
   if (
-    member.guild.id !== guildId ||
+    member.guild.id !== '870740803297902613' ||
     member.user.bot
   )
     return;

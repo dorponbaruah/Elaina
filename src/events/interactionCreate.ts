@@ -38,20 +38,18 @@ export default new Event("interactionCreate", async (interaction) => {
         const channels: Snowflake[] = [];
         
         for await (const channelName of command.onlyChannels) {
-          const guilds = JSON.parse((process.env.guildIds) as string);
-          const guild = client.guilds.cache.get(guilds[1]);
-          
-          if (!guild) {
-            console.error("Guild not found or not cached");
-            return throwError("Internal error: Guild not found.");
-          }
-          
-          const channel = guild.channels.cache.find(c => c.name === channelName);
+          const channel = interaction.guild.channels.cache.find(c => c.name === channelName);
           
           if (channel) channels.push(channel.id);
         }
         
-        return throwError(`Use this command in this/these channel(s)\n> <#${channels.join(">, <#")}>`);
+        if (channels.length) {
+          return throwError(`Use this command in this/these channel(s)\n> <#${channels.join(">, <#")}>`);
+        } else {
+          const channelNames = command.onlyChannels.map(name => `\`${name}\``).join(", ");
+          
+          return throwError(`You server doesn't have any channels to run this command.\nCreate one with name(s):\n${channelNames}`);
+        }
       }
     }
     
